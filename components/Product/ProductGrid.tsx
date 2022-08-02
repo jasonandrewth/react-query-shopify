@@ -76,6 +76,8 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                             alt={productImage.altText}
                             width={500}
                             height={500}
+                            blurDataURL={productImage.url} //automatically provided
+                            placeholder="blur" // Optional blur-up while loading
                           />
                         )}
                       </a>

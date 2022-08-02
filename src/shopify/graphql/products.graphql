@@ -58,14 +58,28 @@ fragment PaginatedProductList on ProductConnection {
       }
 
       nodes {
-        url
+        url(
+          transform: {
+            preferredContentType: JPG
+            crop: CENTER
+            maxWidth: 768
+            maxHeight: 1024
+          }
+        )
         altText
         width
         height
       }
     }
     featuredImage {
-      url
+      url(
+        transform: {
+          preferredContentType: JPG
+          crop: CENTER
+          maxWidth: 768
+          maxHeight: 1024
+        }
+      )
       height
       width
       altText
@@ -143,7 +157,14 @@ query GetProductBySlug($slug: String!) {
       }
 
       nodes {
-        url
+        url(
+          transform: {
+            preferredContentType: JPG
+            crop: CENTER
+            maxWidth: 768
+            maxHeight: 1024
+          }
+        )
         altText
         width
         height

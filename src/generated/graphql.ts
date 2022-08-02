@@ -6713,14 +6713,18 @@ export const PaginatedProductListFragmentDoc = `
         hasPreviousPage
       }
       nodes {
-        url
+        url(
+          transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
+        )
         altText
         width
         height
       }
     }
     featuredImage {
-      url
+      url(
+        transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
+      )
       height
       width
       altText
@@ -7080,7 +7084,9 @@ export const GetProductBySlugDocument = `
         hasPreviousPage
       }
       nodes {
-        url
+        url(
+          transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
+        )
         altText
         width
         height
