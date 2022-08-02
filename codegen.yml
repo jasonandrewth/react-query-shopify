@@ -1,0 +1,19 @@
+overwrite: true
+schema:
+  - https://ditto-press.myshopify.com/api/2022-07/graphql.json:
+      headers:
+        { X-Shopify-Storefront-Access-Token: 940140c1b05be867502b289b0a2998f2 }
+documents: "./src/**/**/*.graphql"
+generates:
+  ./src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher: graphql-request
+      addInfiniteQuery: true
+      legacyMode: false
+      exposeFetcher: true
+      exposeQueryKeys: true
+      exposeMutationKeys: true

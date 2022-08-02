@@ -1,0 +1,218 @@
+fragment PaginatedProductList on ProductConnection {
+  nodes {
+    id
+    handle
+    availableForSale
+    title
+    productType
+    vendor
+    description
+    descriptionHtml
+    availableForSale
+    totalInventory
+    options {
+      id
+      name
+      values
+    }
+
+    priceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    variants(first: 20) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      nodes {
+        id
+        title
+        sku
+        availableForSale
+        requiresShipping
+        selectedOptions {
+          name
+          value
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+      }
+    }
+    images(first: 20) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+
+      nodes {
+        url
+        altText
+        width
+        height
+      }
+    }
+    featuredImage {
+      url
+      height
+      width
+      altText
+      __typename
+    }
+  }
+  pageInfo {
+    hasNextPage
+    hasPreviousPage
+    endCursor
+  }
+}
+
+query GetAllProducts($after: String) {
+  products(first: 20, after: $after) {
+    ...PaginatedProductList
+  }
+}
+
+query GetProductBySlug($slug: String!) {
+  productByHandle(handle: $slug) {
+    id
+    handle
+    availableForSale
+    title
+    productType
+    vendor
+    description
+    descriptionHtml
+    options {
+      id
+      name
+      values
+    }
+
+    priceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    variants(first: 20) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      nodes {
+        id
+        title
+        sku
+        availableForSale
+        requiresShipping
+        selectedOptions {
+          name
+          value
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+      }
+    }
+    images(first: 20) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+
+      nodes {
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+}
+
+# COLLECTIONS
+
+query GetNavItems {
+  menu(handle: "main-menu") {
+    items {
+      id
+      resourceId
+      title
+    }
+  }
+}
+
+query GetAllCollections {
+  collections(first: 50) {
+    nodes {
+      id
+      handle
+      title
+      description
+      image {
+        id
+        url(
+          transform: {
+            preferredContentType: JPG
+            crop: CENTER
+            maxWidth: 768
+            maxHeight: 1024
+          }
+        )
+        altText
+      }
+      products(first: 1) {
+        nodes {
+          id
+          featuredImage {
+            url(
+              transform: {
+                preferredContentType: JPG
+                crop: CENTER
+                maxWidth: 768
+                maxHeight: 1024
+              }
+            )
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+    }
+  }
+}
+
+query GetCollectionByHandle($handle: String!, $productsAfter: String) {
+  collectionByHandle(handle: $handle) {
+    id
+    handle
+    title
+    description
+    products(first: 20, after: $productsAfter) {
+      ...PaginatedProductList
+    }
+  }
+}

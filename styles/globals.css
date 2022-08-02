@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -23,4 +27,18 @@ a {
     color: white;
     background: black;
   }
+}
+
+/* scroll */
+.swiper-pagination-bullet {
+  width: 400px !important;
+  height: 20px;
+  color: #000;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #ff0000 !important;
 }

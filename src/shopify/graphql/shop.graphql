@@ -1,0 +1,17 @@
+query GetShopInfo {
+  shop {
+    name
+    description
+    shippingPolicy {
+      title
+      url
+      body
+    }
+    refundPolicy {
+      body
+    }
+    primaryDomain {
+      url
+    }
+  }
+}
