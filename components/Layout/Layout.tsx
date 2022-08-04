@@ -10,6 +10,8 @@ import {
   useGetAllCollectionsQuery,
   GetAllCollectionsQuery,
   Collection,
+  useGetShopInfoQuery,
+  GetShopInfoQuery,
 } from "src/generated/graphql";
 
 import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
@@ -43,6 +45,10 @@ const Layout: React.FC<IProps> = ({ main }) => {
     { staleTime: Infinity, cacheTime: Infinity }
   );
 
+  const { data: shopInfo } = useGetShopInfoQuery<GetShopInfoQuery, Error>(
+    graphqlRequestClient
+  );
+
   if (isLoading || navItemsLoading) return <h1>loading...</h1>;
 
   if (isError || navItemsError) return <h1>{JSON.stringify(error)}</h1>;
@@ -62,20 +68,16 @@ const Layout: React.FC<IProps> = ({ main }) => {
       <Head>
         <title>Layouts Example</title>
       </Head>
-      <Nav />
-      {displayedCollections &&
-        displayedCollections.map((collection) => {
-          return (
-            <Link
-              as={`/collections/${collection.handle}`}
-              href="/collections/[id]"
-              key={collection.handle}
-            >
-              <span className="mr-4">{collection.title}</span>
-            </Link>
-          );
-        })}
-      <main className="p-8">{main}</main>
+      <div className="w-screen h-screen bg-black text-white flex justify-center items-center">
+        SHOP NAME
+      </div>
+      <div className="lg:grid lg:grid-cols-[20vw_auto]">
+        <Nav
+          shopName={shopInfo.shop.name}
+          navData={displayedCollections as Collection[]}
+        />
+        <main className="lg:max-w-[80vw] p-4 lg:p-8">{main}</main>
+      </div>
     </>
   );
 };

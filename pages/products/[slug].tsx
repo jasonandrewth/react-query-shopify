@@ -15,7 +15,7 @@ import { GraphQLResponse } from "graphql-request/dist/types";
 import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Navigation, Pagination, Lazy } from "swiper";
 
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 
@@ -33,6 +33,7 @@ import {
   useCreateCartMutation,
   CreateCartMutation,
   CreateCartMutationVariables,
+  Product,
 } from "src/generated/graphql";
 
 import "swiper/css/navigation";
@@ -67,7 +68,6 @@ const Product = (context?: NextPageContext) => {
       _context: unknown
     ) => {
       queryClient.invalidateQueries(useCreateCartMutation.getKey());
-      console.log("mutation data", data);
     },
     onError: () => {
       console.log(error);
@@ -92,7 +92,7 @@ const Product = (context?: NextPageContext) => {
       // setResponse(data);
     },
     onError: () => {
-      console.log(error);
+      console.error(error);
     },
   });
 
@@ -142,11 +142,11 @@ const Product = (context?: NextPageContext) => {
         <Swiper
           // install Swiper modules
           modules={[Navigation, Pagination]}
+          preloadImages
           spaceBetween={20}
           slidesPerView={1}
           centeredSlides={true}
           navigation
-          pagination={pagination}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
         >
@@ -158,6 +158,9 @@ const Product = (context?: NextPageContext) => {
                   alt={image.altText}
                   width={500}
                   height={500}
+                  layout="responsive"
+                  blurDataURL={image.url} //automatically provided
+                  placeholder="blur" // Optional blur-up while loading
                 />
               </SwiperSlide>
             );
@@ -195,7 +198,7 @@ const Product = (context?: NextPageContext) => {
             // });
           }}
         >
-          Buy
+          {isLoading ? "Loading" : "Buy"}
         </button>
       </div>
     </div>
@@ -211,7 +214,9 @@ export async function getStaticPaths() {
   );
 
   return {
-    paths: products.nodes.map((product: any) => `/products/${product.handle}`),
+    paths: products.nodes.map(
+      (product: Product) => `/products/${product.handle}`
+    ),
     fallback: false,
   };
 }

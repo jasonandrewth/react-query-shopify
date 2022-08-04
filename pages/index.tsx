@@ -35,7 +35,6 @@ export default function Home() {
       {
         // initialData: ,
         getNextPageParam: (lastPage, allPages) => {
-          console.log("cursor", lastPage.products.pageInfo.endCursor);
           if (lastPage.products.pageInfo.hasNextPage) {
             return {
               after: lastPage.products.pageInfo.endCursor,
@@ -60,9 +59,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-16">
-        <ProductGrid productData={data} />
-      </main>
+      <ProductGrid productData={data} />
     </div>
   );
 }

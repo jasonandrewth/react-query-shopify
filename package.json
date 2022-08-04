@@ -15,9 +15,11 @@
     "@types/node": "^18.0.6",
     "@types/react": "^18.0.15",
     "@types/shopify-buy": "^2.10.10",
+    "clsx": "^1.2.1",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
     "next": "12.2.3",
+    "next-seo": "^5.5.0",
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -26,7 +28,8 @@
     "shopify-buy": "^2.16.1",
     "swiper": "^8.3.2",
     "title": "^3.4.4",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "use-media": "^1.4.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.9.1",

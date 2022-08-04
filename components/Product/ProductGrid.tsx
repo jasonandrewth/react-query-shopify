@@ -3,18 +3,32 @@ import Link from "next/link";
 import Image from "next/image";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import { InfiniteData } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  FetchNextPageOptions,
+  InfiniteQueryObserverResult,
+} from "@tanstack/react-query";
 import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
 
 import {
   Product,
   GetAllProductsQuery,
+  GetCollectionByHandleQuery,
   useGetAllProductsQuery,
   useInfiniteGetAllProductsQuery,
 } from "src/generated/graphql";
 
 interface IProps {
   productData: InfiniteData<GetAllProductsQuery>;
+  fetchNextPage?: (
+    options?: FetchNextPageOptions
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      GetCollectionByHandleQuery | GetAllProductsQuery,
+      Error
+    >
+  >;
+  hi?: string;
 }
 
 const ProductGrid: React.FC<IProps> = ({ productData }) => {
@@ -28,7 +42,6 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
       {
         // initialData: ,
         getNextPageParam: (lastPage, allPages) => {
-          console.log("cursor", lastPage.products.pageInfo.endCursor);
           if (lastPage.products.pageInfo.hasNextPage) {
             return {
               after: lastPage.products.pageInfo.endCursor,
@@ -48,19 +61,19 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
   if (isSuccess) {
     return (
       <InfiniteScroll
-        dataLength={data?.pages.length * 20}
+        dataLength={productData?.pages?.length * 20}
         next={fetchNextPage}
         hasMore={hasNextPage}
         loader={<h4>Loading...</h4>}
       >
-        <div className="grid-container grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {productData?.pages?.map((page) => (
             <>
               {page?.products?.nodes.map((product) => {
                 const productImage = product?.featuredImage || null;
                 return (
                   <article key={product?.id} className="relative">
-                    <Link href={`/products/${product.handle}`}>
+                    <Link scroll={false} href={`/products/${product.handle}`}>
                       <a>
                         {product.title && (
                           <h1

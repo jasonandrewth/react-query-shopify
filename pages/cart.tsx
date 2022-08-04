@@ -26,12 +26,12 @@ const Cart = (context?: NextPageContext) => {
 
   console.log(checkoutId);
 
-  const { data, isLoading, error } = useGetCartQuery<GetCartQuery, Error>(
-    graphqlRequestClient,
-    {
-      checkoutId: checkoutId,
-    }
-  );
+  const { data, isLoading, error, isFetching } = useGetCartQuery<
+    GetCartQuery,
+    Error
+  >(graphqlRequestClient, {
+    checkoutId: checkoutId,
+  });
 
   if (isLoading) return <h1>loading...</h1>;
 
