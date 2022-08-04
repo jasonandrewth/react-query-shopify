@@ -14,7 +14,7 @@ interface IProps {
 const Navigation: React.FC<IProps> = ({ navData, shopName }) => {
   const [toggle, setToggle] = useState(false);
 
-  const isMobile = useMedia({ maxWidth: "768px" });
+  const isDesktop = useMedia({ minWidth: "1024px" });
 
   const toggleHandler = () => {
     setToggle((prev) => !prev);
@@ -30,19 +30,24 @@ const Navigation: React.FC<IProps> = ({ navData, shopName }) => {
       </div>
       <div
         className={clsx(
-          isMobile && (toggle ? "opacity-100 h-auto" : "opacity-0 h-0"),
-          "flex flex-col border-black transition-all duration-150 ease-in-out"
+          !isDesktop &&
+            (toggle
+              ? "opacity-100 h-auto"
+              : "opacity-0 h-0 pointer-events-none"),
+          "flex flex-col border-black transition-all duration-150 ease-in-out md:h-full"
         )}
       >
         <ul className={clsx("flex flex-col h-full")}>
-          <li
-            onClick={toggleHandler}
-            className="w-full lg:h-[20%] border-b border-black p-4 font-black uppercase text-center text-xl flex items-center justify-center"
-          >
-            <Link href={`/`}>
-              <a>{shopName}</a>
-            </Link>
-          </li>
+          {shopName && (
+            <li
+              onClick={toggleHandler}
+              className="w-full lg:h-[30%] border-b border-black p-4 font-black uppercase text-center text-xl flex items-center justify-center"
+            >
+              <Link href={`/`}>
+                <a>{shopName}</a>
+              </Link>
+            </li>
+          )}
           <li
             onClick={toggleHandler}
             className="w-full border-b border-black p-4 font-black uppercase text-center text-xl"

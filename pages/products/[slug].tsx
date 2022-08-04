@@ -167,16 +167,14 @@ const Product = (context?: NextPageContext) => {
           })}
         </Swiper>
       </div>
-      <div className="flex flex-col">
-        <h1>{product?.title}</h1>
+      <div className="flex flex-col p-8">
+        <h1 className="font-black text-xl">{product?.title}</h1>
         {product?.description}
-        <h1>Variants</h1>
         {product?.variants?.nodes?.map((variant) => {
-          if (variant.title !== "Default Title") {
+          if (variant.title !== "Default Title" && variant?.availableForSale) {
             return (
               <>
                 <h2>{variant.title}</h2>
-                <h2>{variant.availableForSale && "forSale"}</h2>
                 <div>
                   {variant.selectedOptions.map((option) => option.name)}
                 </div>
@@ -191,12 +189,8 @@ const Product = (context?: NextPageContext) => {
               quantity: state.quantity,
               variantId: product?.variants?.nodes[0]?.id,
             });
-
-            // setState({
-            //   quantity: state.quantity + 1,
-            //   variant: product.variants.nodes[0].id,
-            // });
           }}
+          className="py-4 px-6 border border-black max-w-xs"
         >
           {isLoading ? "Loading" : "Buy"}
         </button>
