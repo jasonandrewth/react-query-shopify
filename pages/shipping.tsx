@@ -1,10 +1,10 @@
 import React from "react";
 
-import { gql } from "graphql-request";
-import { GraphQLResponse } from "graphql-request/dist/types";
 import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
 
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+
+import Layout from "components/Layout";
 
 import { useGetShopInfoQuery, GetShopInfoQuery } from "src/generated/graphql";
 
@@ -18,8 +18,12 @@ const ShippingPage = () => {
   if (error) return <p>Boom boy{error.message}</p>;
 
   return (
-    <div
-      dangerouslySetInnerHTML={{ __html: data?.shop?.shippingPolicy?.body }}
+    <Layout
+      main={
+        <div
+          dangerouslySetInnerHTML={{ __html: data?.shop?.shippingPolicy?.body }}
+        />
+      }
     />
   );
 };

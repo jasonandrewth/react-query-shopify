@@ -16,6 +16,7 @@ import "swiper/scss";
 
 function App({
   Component,
+  router,
   pageProps: { session, dehydratedState, ...pageProps },
 }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -23,7 +24,7 @@ function App({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
-        <Layout main={<Component {...pageProps} />} />
+        <Component {...pageProps} key={router.route} />
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

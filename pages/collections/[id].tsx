@@ -14,6 +14,7 @@ import type {
 import { gql } from "graphql-request";
 import { GraphQLResponse } from "graphql-request/dist/types";
 import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
+import Layout from "components/Layout";
 
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
@@ -22,6 +23,9 @@ import {
   GetCollectionByHandleQuery,
   useInfiniteGetCollectionByHandleQuery,
   Collection,
+  useGetAllCollectionsQuery,
+  useGetNavItemsQuery,
+  useGetShopInfoQuery,
 } from "src/generated/graphql";
 
 const Collection = () => {
@@ -60,52 +64,61 @@ const Collection = () => {
   if (isError) return <p>Boom boy{error.message}</p>;
 
   return (
-    <>
-      {isSuccess && (
-        <InfiniteScroll
-          dataLength={hasNextPage ? data?.pages?.length * 20 : 20}
-          next={fetchNextPage}
-          hasMore={hasNextPage}
-          loader={<h4>Loading...</h4>}
-        >
-          <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {data?.pages?.map((page) => (
-              <>
-                {page?.collectionByHandle?.products?.nodes.map((product) => {
-                  const productImage = product?.featuredImage || null;
-                  return (
-                    <article key={product?.id} className="relative">
-                      <Link scroll={false} href={`/products/${product.handle}`}>
-                        <a>
-                          {product.title && (
-                            <h1
-                              className="inline-block absolute left-0 bottom-0 p-4 z-40 bg-white text-black"
-                              key={product.id}
+    <Layout
+      main={
+        <>
+          {isSuccess && (
+            <InfiniteScroll
+              dataLength={hasNextPage ? data?.pages?.length * 20 : 20}
+              next={fetchNextPage}
+              hasMore={hasNextPage}
+              loader={<h4>Loading...</h4>}
+            >
+              <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {data?.pages?.map((page) => (
+                  <>
+                    {page?.collectionByHandle?.products?.nodes.map(
+                      (product) => {
+                        const productImage = product?.featuredImage || null;
+                        return (
+                          <article key={product?.id} className="relative">
+                            <Link
+                              scroll={false}
+                              href={`/products/${product.handle}`}
                             >
-                              {product.title}
-                            </h1>
-                          )}
-                          {productImage && (
-                            <Image
-                              src={productImage.url}
-                              alt={productImage.altText}
-                              width={500}
-                              height={500}
-                              blurDataURL={productImage.url} //automatically provided
-                              placeholder="blur" // Optional blur-up while loading
-                            />
-                          )}
-                        </a>
-                      </Link>
-                    </article>
-                  );
-                })}
-              </>
-            ))}
-          </div>
-        </InfiniteScroll>
-      )}
-    </>
+                              <a>
+                                {product.title && (
+                                  <h1
+                                    className="inline-block absolute left-0 bottom-0 p-4 z-40 bg-white text-black"
+                                    key={product.id}
+                                  >
+                                    {product.title}
+                                  </h1>
+                                )}
+                                {productImage && (
+                                  <Image
+                                    src={productImage.url}
+                                    alt={productImage.altText}
+                                    width={500}
+                                    height={500}
+                                    blurDataURL={productImage.url} //automatically provided
+                                    placeholder="blur" // Optional blur-up while loading
+                                  />
+                                )}
+                              </a>
+                            </Link>
+                          </article>
+                        );
+                      }
+                    )}
+                  </>
+                ))}
+              </div>
+            </InfiniteScroll>
+          )}
+        </>
+      }
+    />
   );
 };
 
@@ -141,6 +154,21 @@ export const getStaticProps = async ({
       productsAfter: null,
       handle: id,
     })
+  );
+
+  await queryClient.prefetchQuery(
+    useGetShopInfoQuery.getKey(),
+    useGetShopInfoQuery.fetcher(graphqlRequestClient)
+  );
+
+  await queryClient.prefetchQuery(
+    useGetAllCollectionsQuery.getKey(),
+    useGetAllCollectionsQuery.fetcher(graphqlRequestClient)
+  );
+
+  await queryClient.prefetchQuery(
+    useGetNavItemsQuery.getKey(),
+    useGetNavItemsQuery.fetcher(graphqlRequestClient)
   );
 
   return {

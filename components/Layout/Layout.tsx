@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -49,6 +50,10 @@ const Layout: React.FC<IProps> = ({ main }) => {
     graphqlRequestClient
   );
 
+  useEffect(() => {
+    console.log("rerender");
+  }, []);
+
   if (isLoading || navItemsLoading) return <h1>loading...</h1>;
 
   if (isError || navItemsError) return <h1>{JSON.stringify(error)}</h1>;
@@ -65,17 +70,28 @@ const Layout: React.FC<IProps> = ({ main }) => {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Layouts Example</title>
-      </Head>
-      <div className="w-screen h-screen bg-black text-white flex justify-center items-center">
-        SHOP NAME
-      </div>
+      </Head> */}
       <div className="lg:grid lg:grid-cols-[20vw_auto]">
         <Nav
-          shopName={shopInfo.shop.name}
-          navData={displayedCollections as Collection[]}
+          // shopName={shopInfo.shop.name}
+          navData={collectionsData.collections.nodes as Collection[]}
         />
+        {/* <div>
+          {collectionsData.collections.nodes.map((item) => {
+            return (
+              <Link
+                key={item.id}
+                as={`/collections/${item.handle}`}
+                href="/collections/[id]"
+                scroll={false}
+              >
+                <a>{item.title}</a>
+              </Link>
+            );
+          })}
+        </div> */}
         <main className="lg:max-w-[80vw] p-4 lg:p-8">{main}</main>
       </div>
     </>
@@ -83,16 +99,3 @@ const Layout: React.FC<IProps> = ({ main }) => {
 };
 
 export default Layout;
-
-const GET_ALL_COLS_QUERY = gql`
-  query getProducts($first: Int!) {
-    collections(first: $first) {
-      edges {
-        node {
-          title
-          handle
-        }
-      }
-    }
-  }
-`;

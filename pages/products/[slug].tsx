@@ -20,11 +20,13 @@ import { Navigation, Pagination, Lazy } from "swiper";
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 
 import { useAddItem } from "lib/shopify/CartHooks";
+import Layout from "components/Layout";
 
 import {
   GetProductBySlugQuery,
   useGetProductBySlugQuery,
   CheckoutLineItemInput,
+  useGetAllCollectionsQuery,
   CheckoutLineItem,
   ProductVariant,
   useAddCartItemMutation,
@@ -34,6 +36,8 @@ import {
   CreateCartMutation,
   CreateCartMutationVariables,
   Product,
+  useGetNavItemsQuery,
+  useGetShopInfoQuery,
 } from "src/generated/graphql";
 
 import "swiper/css/navigation";
@@ -137,65 +141,72 @@ const Product = (context?: NextPageContext) => {
   };
 
   return (
-    <div className="grid grid-cols-2">
-      <div>
-        <Swiper
-          // install Swiper modules
-          modules={[Navigation, Pagination]}
-          preloadImages
-          spaceBetween={20}
-          slidesPerView={1}
-          centeredSlides={true}
-          navigation
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
-        >
-          {product?.images?.nodes?.map((image) => {
-            return (
-              <SwiperSlide key={image.altText}>
-                <Image
-                  src={image.url}
-                  alt={image.altText}
-                  width={500}
-                  height={500}
-                  layout="responsive"
-                  blurDataURL={image.url} //automatically provided
-                  placeholder="blur" // Optional blur-up while loading
-                />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </div>
-      <div className="flex flex-col p-8">
-        <h1 className="font-black text-xl">{product?.title}</h1>
-        {product?.description}
-        {product?.variants?.nodes?.map((variant) => {
-          if (variant.title !== "Default Title" && variant?.availableForSale) {
-            return (
-              <>
-                <h2>{variant.title}</h2>
-                <div>
-                  {variant.selectedOptions.map((option) => option.name)}
-                </div>
-              </>
-            );
-          }
-        })}
+    <Layout
+      main={
+        <div className="grid grid-cols-2">
+          <div>
+            <Swiper
+              // install Swiper modules
+              modules={[Navigation, Pagination]}
+              preloadImages
+              spaceBetween={20}
+              slidesPerView={1}
+              centeredSlides={true}
+              navigation
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log("slide change")}
+            >
+              {product?.images?.nodes?.map((image) => {
+                return (
+                  <SwiperSlide key={image.altText}>
+                    <Image
+                      src={image.url}
+                      alt={image.altText}
+                      width={500}
+                      height={500}
+                      layout="responsive"
+                      blurDataURL={image.url} //automatically provided
+                      placeholder="blur" // Optional blur-up while loading
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+          <div className="flex flex-col p-8">
+            <h1 className="font-black text-xl">{product?.title}</h1>
+            {product?.description}
+            {product?.variants?.nodes?.map((variant) => {
+              if (
+                variant.title !== "Default Title" &&
+                variant?.availableForSale
+              ) {
+                return (
+                  <>
+                    <h2>{variant.title}</h2>
+                    <div>
+                      {variant.selectedOptions.map((option) => option.name)}
+                    </div>
+                  </>
+                );
+              }
+            })}
 
-        <button
-          onClick={async () => {
-            await addItemToCart({
-              quantity: state.quantity,
-              variantId: product?.variants?.nodes[0]?.id,
-            });
-          }}
-          className="py-4 px-6 border border-black max-w-xs"
-        >
-          {isLoading ? "Loading" : "Buy"}
-        </button>
-      </div>
-    </div>
+            <button
+              onClick={async () => {
+                await addItemToCart({
+                  quantity: state.quantity,
+                  variantId: product?.variants?.nodes[0]?.id,
+                });
+              }}
+              className="py-4 px-6 border border-black max-w-xs"
+            >
+              {isLoading ? "Loading" : "Buy"}
+            </button>
+          </div>
+        </div>
+      }
+    />
   );
 };
 
@@ -225,6 +236,21 @@ export const getStaticProps = async ({
   await queryClient.prefetchQuery(
     useGetProductBySlugQuery.getKey({ slug: slug }),
     useGetProductBySlugQuery.fetcher(graphqlRequestClient, { slug: slug })
+  );
+
+  await queryClient.prefetchQuery(
+    useGetShopInfoQuery.getKey(),
+    useGetShopInfoQuery.fetcher(graphqlRequestClient)
+  );
+
+  await queryClient.prefetchQuery(
+    useGetAllCollectionsQuery.getKey(),
+    useGetAllCollectionsQuery.fetcher(graphqlRequestClient)
+  );
+
+  await queryClient.prefetchQuery(
+    useGetNavItemsQuery.getKey(),
+    useGetNavItemsQuery.fetcher(graphqlRequestClient)
   );
 
   return {

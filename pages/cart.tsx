@@ -11,6 +11,8 @@ import nookies from "nookies";
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
 
+import Layout from "components/Layout";
+
 import {
   useGetCartQuery,
   GetCartQuery,
@@ -41,21 +43,25 @@ const Cart = (context?: NextPageContext) => {
 
   if (checkoutId && data) {
     return (
-      <div>
-        <ul>
-          {
-            // @ts-ignore
-            data.node.lineItems.nodes.map((lineItem: CheckoutLineItem) => {
-              return (
-                <li key={lineItem.id}>
-                  {lineItem.title}{" "}
-                  <span className="text-red-700">{lineItem.quantity}</span>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </div>
+      <Layout
+        main={
+          <div>
+            <ul>
+              {
+                // @ts-ignore
+                data.node.lineItems.nodes.map((lineItem: CheckoutLineItem) => {
+                  return (
+                    <li key={lineItem.id}>
+                      {lineItem.title}{" "}
+                      <span className="text-red-700">{lineItem.quantity}</span>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        }
+      />
     );
   }
 };

@@ -8,10 +8,10 @@ import { Collection } from "src/generated/graphql";
 
 interface IProps {
   navData: Collection[];
-  shopName: string;
+  // shopName: string;
 }
 
-const Navigation: React.FC<IProps> = ({ navData, shopName }) => {
+const Navigation: React.FC<IProps> = ({ navData }) => {
   const [toggle, setToggle] = useState(false);
 
   const isDesktop = useMedia({ minWidth: "1024px" });
@@ -34,20 +34,20 @@ const Navigation: React.FC<IProps> = ({ navData, shopName }) => {
             (toggle
               ? "opacity-100 h-auto"
               : "opacity-0 h-0 pointer-events-none"),
-          "flex flex-col border-black transition-all duration-150 ease-in-out md:h-full"
+          "flex flex-col border-black transition-all duration-150 ease-in-out h-full"
         )}
       >
         <ul className={clsx("flex flex-col h-full")}>
-          {shopName && (
+          {/* {shopName && (
             <li
               onClick={toggleHandler}
-              className="w-full lg:h-[30%] border-b border-black p-4 font-black uppercase text-center text-xl flex items-center justify-center"
+              className="w-full lg:h-[20%] border-b border-black p-4 font-black uppercase text-center text-xl flex items-center justify-center"
             >
               <Link href={`/`}>
                 <a>{shopName}</a>
               </Link>
             </li>
-          )}
+          )} */}
           <li
             onClick={toggleHandler}
             className="w-full border-b border-black p-4 font-black uppercase text-center text-xl"
@@ -79,4 +79,4 @@ const Navigation: React.FC<IProps> = ({ navData, shopName }) => {
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);
