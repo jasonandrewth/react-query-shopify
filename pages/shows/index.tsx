@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 
 //Data Fetching
 import { useQuery, dehydrate, QueryClient } from "@tanstack/react-query";
@@ -13,14 +13,26 @@ const ShowsPage = ({ data }) => {
   //     { initialData: postData }
   //   );
 
-  console.log("post data", data.postData);
-  console.log("tier data", data.tierData);
+  const posts = data.postData.data;
 
   return (
     <div>
-      {/* {posts.map((post, idx) => {
-        return <p key={idx}>{JSON.stringify(post)}</p>;
-      })} */}
+      {posts.map((post, idx) => {
+        return (
+          <Link
+            key={idx}
+            passHref
+            href={`https://patreon.com${post.attributes.url}`}
+          >
+            <a target="_blank">
+              <article key={idx}>
+                <h2>{post.attributes.title}</h2>
+                <p>{post.attributes.content}</p>
+              </article>
+            </a>
+          </Link>
+        );
+      })}
     </div>
   );
 };
@@ -37,23 +49,10 @@ export const getStaticProps = async () => {
   );
   const postData = res.data;
 
-  ("campaigns/6702424?include=tiers&fields[tier]=title,description,image_url,url");
-
-  const tierRes = await patreonRequestClient.get(
-    `https://www.patreon.com/api/oauth2/v2/campaigns/6702424?include=tiers&fields${encodeURIComponent(
-      "[tier]"
-    )}=title,description,image_url,url`
-  );
-
-  const tierData = tierRes.data;
-
-  //   const data = await res.json();
-
   return {
     props: {
       data: {
         postData: postData,
-        tierData: tierData,
       },
     },
   };
