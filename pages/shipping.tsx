@@ -1,6 +1,6 @@
 import React from "react";
 
-import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
+import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
@@ -12,7 +12,7 @@ const ShippingPage = () => {
   const { isLoading, error, data } = useGetShopInfoQuery<
     GetShopInfoQuery,
     Error
-  >(graphqlRequestClient);
+  >(shopifyGraphqlRequestClient);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Boom boy{error.message}</p>;
@@ -35,7 +35,7 @@ export const getStaticProps = async () => {
 
   await queryClient.prefetchQuery(
     useGetShopInfoQuery.getKey(),
-    useGetShopInfoQuery.fetcher(graphqlRequestClient)
+    useGetShopInfoQuery.fetcher(shopifyGraphqlRequestClient)
   );
 
   return {

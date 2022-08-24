@@ -1,18 +1,16 @@
 import { useMemo } from "react";
 
-export function formatPrice({
-  amount,
-  currencyCode,
-}: {
+interface Price {
   amount: number;
   currencyCode: string;
-}) {
-  const formatCurrency = new Intl.NumberFormat("", {
+  locales?: string | string[];
+}
+
+export function formatPrice({ amount, currencyCode, locales }: Price): string {
+  return new Intl.NumberFormat(locales, {
     style: "currency",
     currency: currencyCode,
-  });
-
-  return formatCurrency.format(amount);
+  }).format(amount);
 }
 
 export function formatVariantPrice({

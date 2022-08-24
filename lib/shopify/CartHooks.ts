@@ -1,7 +1,7 @@
 import { CheckoutCreatePayload } from "./../../src/generated/graphql";
 import { useState, useEffect } from "react";
 import { NextPageContext } from "next";
-import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
+import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 import nookies from "nookies";
 import formatTitle from "title";
 import { useQueryClient } from "@tanstack/react-query";
@@ -32,7 +32,7 @@ export const useAddItem = async (
   const { mutateAsync: mutateCreateCartAsync } = useCreateCartMutation<
     CreateCartMutation,
     Error
-  >(graphqlRequestClient, {
+  >(shopifyGraphqlRequestClient, {
     onSuccess: (
       data: AddCartItemMutation,
       _variables: CreateCartMutationVariables,
@@ -51,20 +51,23 @@ export const useAddItem = async (
     isLoading,
     error,
     mutateAsync: mutateCartItemAsync,
-  } = useAddCartItemMutation<AddCartItemMutation, Error>(graphqlRequestClient, {
-    onSuccess: (
-      data: AddCartItemMutation,
-      _variables: AddCartItemMutationVariables,
-      _context: unknown
-    ) => {
-      queryClient.invalidateQueries(useAddCartItemMutation.getKey());
-      console.log("mutation data", data);
-      setResponse(data);
-    },
-    onError: () => {
-      console.log(error);
-    },
-  });
+  } = useAddCartItemMutation<AddCartItemMutation, Error>(
+    shopifyGraphqlRequestClient,
+    {
+      onSuccess: (
+        data: AddCartItemMutation,
+        _variables: AddCartItemMutationVariables,
+        _context: unknown
+      ) => {
+        queryClient.invalidateQueries(useAddCartItemMutation.getKey());
+        console.log("mutation data", data);
+        setResponse(data);
+      },
+      onError: () => {
+        console.log(error);
+      },
+    }
+  );
 
   // return {mutateCartItemAsync}
 
@@ -82,13 +85,3 @@ export const useAddItem = async (
     });
   }
 };
-
-const ADD_CART_ITEM = gql`
-  mutation addCartItem($checkoutId: ID!, $lineItem: CheckoutLineItemInput!) {
-    checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: [$lineItem]) {
-      checkout {
-        id
-      }
-    }
-  }
-`;

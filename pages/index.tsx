@@ -8,53 +8,19 @@ import type {
 import Image from "next/image";
 import { gql } from "graphql-request";
 import { GraphQLResponse } from "graphql-request/dist/types";
-import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
+import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { shopifyClient, parseShopifyResponse } from "../lib/shopify";
 import { GraphModel } from "shopify-buy";
 
-import Layout from "components/Layout";
+import { getLayout } from "components/Layout/Layout";
 import ProductGrid from "components/Product/ProductGrid";
 
-import {
-  Product,
-  useGetNavItemsQuery,
-  GetAllProductsQuery,
-  useGetAllProductsQuery,
-  useInfiniteGetAllProductsQuery,
-  useGetShopInfoQuery,
-  useGetAllCollectionsQuery,
-} from "src/generated/graphql";
+import { useGetShopInfoQuery } from "src/generated/graphql";
 
 export default function Home() {
-  const { isLoading, error, data, isSuccess, fetchNextPage, hasNextPage } =
-    useInfiniteGetAllProductsQuery<GetAllProductsQuery, Error>(
-      "after",
-      graphqlRequestClient,
-      {
-        after: null,
-      },
-      {
-        // initialData: ,
-        getNextPageParam: (lastPage, allPages) => {
-          if (lastPage.products.pageInfo.hasNextPage) {
-            return {
-              after: lastPage.products.pageInfo.endCursor,
-            };
-          }
-        },
-        onSuccess: () => {
-          console.log(Date.now(), "Fetching products succeed");
-        },
-      }
-    );
-
-  if (isLoading) return <h1>loading...</h1>;
-
-  if (error) return <h1>{JSON.stringify(error)}</h1>;
-
   return (
     <>
       <Head>
@@ -63,32 +29,19 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout main={<ProductGrid productData={data} />} />
+      <div className="absolute top-0 left-0 w-screen h-screen bg-lime"></div>
     </>
   );
 }
 
+Home.getLayout = getLayout;
+
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchInfiniteQuery(
-    useInfiniteGetAllProductsQuery.getKey({ after: null }),
-    useGetAllProductsQuery.fetcher(graphqlRequestClient, { after: null })
-  );
-
   await queryClient.prefetchQuery(
     useGetShopInfoQuery.getKey(),
-    useGetShopInfoQuery.fetcher(graphqlRequestClient)
-  );
-
-  await queryClient.prefetchQuery(
-    useGetAllCollectionsQuery.getKey(),
-    useGetAllCollectionsQuery.fetcher(graphqlRequestClient)
-  );
-
-  await queryClient.prefetchQuery(
-    useGetNavItemsQuery.getKey(),
-    useGetNavItemsQuery.fetcher(graphqlRequestClient)
+    useGetShopInfoQuery.fetcher(shopifyGraphqlRequestClient)
   );
 
   return {

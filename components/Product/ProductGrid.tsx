@@ -8,7 +8,7 @@ import {
   FetchNextPageOptions,
   InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
-import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
+import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 
 import {
   Product,
@@ -28,14 +28,13 @@ interface IProps {
       Error
     >
   >;
-  hi?: string;
 }
 
 const ProductGrid: React.FC<IProps> = ({ productData }) => {
   const { isLoading, error, data, isSuccess, fetchNextPage, hasNextPage } =
     useInfiniteGetAllProductsQuery<GetAllProductsQuery, Error>(
       "after",
-      graphqlRequestClient,
+      shopifyGraphqlRequestClient,
       {
         after: null,
       },
@@ -66,14 +65,14 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         hasMore={hasNextPage}
         loader={<h4>Loading...</h4>}
       >
-        <div className="grid-container grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto">
+        <div className="grid-container place-items-center grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto">
           {productData?.pages?.map((page) => (
             <>
               {page?.products?.nodes.map((product) => {
                 const productImage = product?.featuredImage || null;
                 return (
                   <article key={product?.id} className="relative">
-                    <Link scroll={false} href={`/products/${product.handle}`}>
+                    <Link href={`/products/${product.handle}`}>
                       <a>
                         {product.title && (
                           <h1

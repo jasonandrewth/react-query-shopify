@@ -69,6 +69,7 @@ fragment PaginatedProductList on ProductConnection {
         altText
         width
         height
+        id
       }
     }
     featuredImage {
@@ -168,6 +169,7 @@ query GetProductBySlug($slug: String!) {
         altText
         width
         height
+        id
       }
     }
   }

@@ -1,20 +1,14 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { FC, useCallback, useMemo, PropsWithChildren } from "react";
 
 export interface State {
-  displayLineup: boolean;
   displayMenu: boolean;
-  displayHire: boolean;
-  displayMobileButtons: boolean;
-  lineupView: string;
+  displayNewsletter: boolean;
   menuView: string;
 }
 
 const initialState = {
-  displayLineup: false,
   displayMenu: false,
-  displayHire: false,
-  displayMobileButtons: true,
-  lineupView: "LINEUP_VIEW",
+  displayNewsletter: false,
   menuView: "MENU_VIEW",
 };
 
@@ -26,16 +20,10 @@ type Action =
       type: "CLOSE_MENU";
     }
   | {
-      type: "OPEN_LINEUP";
+      type: "OPEN_NEWSLETTER";
     }
   | {
-      type: "CLOSE_LINEUP";
-    }
-  | {
-      type: "OPEN_HIRE";
-    }
-  | {
-      type: "CLOSE_HIRE";
+      type: "CLOSE_NEWSLETTER";
     };
 
 export const UIContext = React.createContext<State | any>(initialState);
@@ -48,48 +36,30 @@ function uiReducer(state: State, action: Action) {
       return {
         ...state,
         displayMenu: true,
-        displayMobileButtons: false,
       };
     }
     case "CLOSE_MENU": {
       return {
         ...state,
         displayMenu: false,
-        displayMobileButtons: true,
       };
     }
-    case "OPEN_LINEUP": {
+    case "OPEN_NEWSLETTER": {
       return {
         ...state,
-        displayLineup: true,
-        displayMobileButtons: false,
+        displayNewsletter: true,
       };
     }
-    case "CLOSE_LINEUP": {
+    case "CLOSE_NEWSLETTER": {
       return {
         ...state,
-        displayLineup: false,
-        displayMobileButtons: true,
-      };
-    }
-    case "OPEN_HIRE": {
-      return {
-        ...state,
-        displayHire: true,
-        displayMobileButtons: false,
-      };
-    }
-    case "CLOSE_HIRE": {
-      return {
-        ...state,
-        displayHire: false,
-        displayMobileButtons: true,
+        displayNewsletter: false,
       };
     }
   }
 }
 
-export const UIProvider: FC = (props) => {
+export const UIProvider: FC<PropsWithChildren> = (props) => {
   const [state, dispatch] = React.useReducer(uiReducer, initialState);
 
   const openMenu = useCallback<() => void>(
@@ -100,34 +70,31 @@ export const UIProvider: FC = (props) => {
     () => dispatch({ type: "CLOSE_MENU" }),
     [dispatch]
   );
-  const openLineup = useCallback<() => void>(
-    () => dispatch({ type: "OPEN_LINEUP" }),
+  const toggleMenu = useCallback(() => {
+    state.displayMenu
+      ? dispatch({ type: "CLOSE_MENU" })
+      : dispatch({ type: "OPEN_MENU" });
+  }, [dispatch, state.displayMenu]);
+
+  const openNewsletter = useCallback<() => void>(
+    () => dispatch({ type: "OPEN_NEWSLETTER" }),
     [dispatch]
   );
-  const closeLineup = useCallback<() => void>(
-    () => dispatch({ type: "CLOSE_LINEUP" }),
-    [dispatch]
-  );
-  const openHire = useCallback<() => void>(
-    () => dispatch({ type: "OPEN_HIRE" }),
-    [dispatch]
-  );
-  const closeHire = useCallback<() => void>(
-    () => dispatch({ type: "CLOSE_HIRE" }),
+  const closeNewsletter = useCallback<() => void>(
+    () => dispatch({ type: "CLOSE_NEWSLETTER" }),
     [dispatch]
   );
 
   const value = useMemo(
     () => ({
       ...state,
-      openLineup,
-      closeLineup,
+      openNewsletter,
+      closeNewsletter,
       openMenu,
       closeMenu,
-      openHire,
-      closeHire,
+      toggleMenu,
     }),
-    [state, closeHire, closeLineup, closeMenu, openHire, openLineup, openMenu]
+    [state]
   );
 
   return <UIContext.Provider value={value} {...props} />;
@@ -141,6 +108,6 @@ export const useUI = () => {
   return context;
 };
 
-// export const ManagedUIContext: FC = ({ children }) => (
-//   <UIProvider>{children}</UIProvider>
-// );
+export const ManagedUIContext: FC<PropsWithChildren> = ({ children }) => (
+  <UIProvider>{children}</UIProvider>
+);

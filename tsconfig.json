@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/UI/LoadingButton"  ],
   "exclude": [
     "node_modules"
   ]

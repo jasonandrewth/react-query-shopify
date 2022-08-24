@@ -524,23 +524,23 @@ export type CartCodeDiscountAllocation = CartDiscountAllocation & {
  */
 export type CartCost = {
   __typename?: 'CartCost';
-  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, the checkout charge amount is equivalent to subtotalAmount. */
+  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
   checkoutChargeAmount: MoneyV2;
   /** The amount, before taxes and cart-level discounts, for the customer to pay. */
   subtotalAmount: MoneyV2;
-  /** Whether or not the subtotal amount is estimated. */
+  /** Whether the subtotal amount is estimated. */
   subtotalAmountEstimated: Scalars['Boolean'];
   /** The total amount for the customer to pay. */
   totalAmount: MoneyV2;
-  /** Whether or not the total amount is estimated. */
+  /** Whether the total amount is estimated. */
   totalAmountEstimated: Scalars['Boolean'];
   /** The duty amount for the customer to pay at checkout. */
   totalDutyAmount?: Maybe<MoneyV2>;
-  /** Whether or not the total duty amount is estimated. */
+  /** Whether the total duty amount is estimated. */
   totalDutyAmountEstimated: Scalars['Boolean'];
   /** The tax amount for the customer to pay at checkout. */
   totalTaxAmount?: Maybe<MoneyV2>;
-  /** Whether or not the total tax amount is estimated. */
+  /** Whether the total tax amount is estimated. */
   totalTaxAmountEstimated: Scalars['Boolean'];
 };
 
@@ -901,7 +901,7 @@ export type Checkout = Node & {
    * @deprecated Use `paymentDueV2` instead
    */
   paymentDue: Scalars['Money'];
-  /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes and shipping minus discounts and gift cards. */
+  /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards. */
   paymentDueV2: MoneyV2;
   /**
    * Whether or not the Checkout is ready and can be completed. Checkouts may
@@ -927,7 +927,7 @@ export type Checkout = Node & {
    * @deprecated Use `subtotalPriceV2` instead
    */
   subtotalPrice: Scalars['Money'];
-  /** Price of the checkout before duties, shipping and taxes. */
+  /** The price at checkout before duties, shipping, and taxes. */
   subtotalPriceV2: MoneyV2;
   /** Whether the checkout is tax exempt. */
   taxExempt: Scalars['Boolean'];
@@ -940,7 +940,7 @@ export type Checkout = Node & {
    * @deprecated Use `totalPriceV2` instead
    */
   totalPrice: Scalars['Money'];
-  /** The sum of all the prices of all the items in the checkout, duties, taxes and discounts included. */
+  /** The sum of all the prices of all the items in the checkout, including duties, taxes, and discounts. */
   totalPriceV2: MoneyV2;
   /**
    * The sum of all the taxes applied to the line items and shipping lines in the checkout.
@@ -3405,16 +3405,16 @@ export type ImageEdge = {
 /**
  * The available options for transforming an image.
  *
- * All transformation options are considered "best-effort". Any transformation that the original image type doesn't support will be ignored.
+ * All transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.
  *
  */
 export type ImageTransformInput = {
   /**
-   * Region of the image to remain after cropping.
-   * Must be used in conjunction with maxWidth and/or maxHeight fields where the maxWidth / maxHeight are not equal.
-   * The crop parameter should coincide with the smaller value (i.e. smaller maxWidth indicates a LEFT / RIGHT crop, while
-   * smaller maxHeight indicates a TOP / BOTTOM crop). For example, { maxWidth: 5, maxHeight: 10, crop: LEFT } will result
-   * in an image with width 5 and height 10, where the right side of the image is removed.
+   * The region of the image to remain after cropping.
+   * Must be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.
+   * The `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while
+   * a smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result
+   * in an image with a width of 5 and height of 10, where the right side of the image is removed.
    *
    */
   crop?: InputMaybe<CropRegion>;
@@ -3598,7 +3598,7 @@ export enum LanguageCode {
   Lv = 'LV',
   /** Malagasy. */
   Mg = 'MG',
-  /** Maori. */
+  /** Māori. */
   Mi = 'MI',
   /** Macedonian. */
   Mk = 'MK',
@@ -4317,9 +4317,10 @@ export type Mutation = {
    */
   customerAccessTokenCreate?: Maybe<CustomerAccessTokenCreatePayload>;
   /**
-   * Creates a customer access token using a multipass token instead of email and password.
-   * A customer record is created if customer does not exist. If a customer record already
-   * exists but the record is disabled, then it's enabled.
+   * Creates a customer access token using a
+   * [multipass token](https://shopify.dev/api/multipass) instead of email and
+   * password. A customer record is created if the customer doesn't exist. If a customer
+   * record already exists but the record is disabled, then the customer record is enabled.
    *
    */
   customerAccessTokenCreateWithMultipass?: Maybe<CustomerAccessTokenCreateWithMultipassPayload>;
@@ -5646,7 +5647,7 @@ export type QueryRoot = {
   blogByHandle?: Maybe<Blog>;
   /** List of the shop's blogs. */
   blogs: BlogConnection;
-  /** Find a cart by its ID. */
+  /** Retrieve a cart by its ID. For more information, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
   cart?: Maybe<Cart>;
   /** Fetch a specific `Collection` by one of its unique attributes. */
   collection?: Maybe<Collection>;
@@ -5957,7 +5958,7 @@ export type SellingPlan = {
   id: Scalars['ID'];
   /** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
   name: Scalars['String'];
-  /** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. */
+  /** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing. */
   options: Array<SellingPlanOption>;
   /** The price adjustments that a selling plan makes when a variant is purchased with a selling plan. */
   priceAdjustments: Array<SellingPlanPriceAdjustment>;
@@ -6133,7 +6134,11 @@ export type SellingPlanGroupEdge = {
   node: SellingPlanGroup;
 };
 
-/** Represents an option on a selling plan group that's available in the drop-down list in the storefront. */
+/**
+ * Represents an option on a selling plan group that's available in the drop-down list in the storefront.
+ *
+ * Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing.
+ */
 export type SellingPlanGroupOption = {
   __typename?: 'SellingPlanGroupOption';
   /** The name of the option. For example, 'Delivery every'. */
@@ -6158,12 +6163,12 @@ export type SellingPlanPercentagePriceAdjustment = {
   adjustmentPercentage: Scalars['Int'];
 };
 
-/** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. */
+/** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. If a variant has multiple price adjustments, then the first price adjustment applies when the variant is initially purchased. The second price adjustment applies after a certain number of orders (specified by the `orderCount` field) are made. If a selling plan doesn't have any price adjustments, then the unadjusted price of the variant is the effective price. */
 export type SellingPlanPriceAdjustment = {
   __typename?: 'SellingPlanPriceAdjustment';
   /** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
   adjustmentValue: SellingPlanPriceAdjustmentValue;
-  /** The number of orders that the price adjustment applies to If the price adjustment always applies, then this field is `null`. */
+  /** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
   orderCount?: Maybe<Scalars['Int']>;
 };
 
@@ -6206,7 +6211,7 @@ export type Shop = HasMetafields & Node & {
   name: Scalars['String'];
   /** Settings related to payments. */
   paymentSettings: PaymentSettings;
-  /** The shop’s primary domain. */
+  /** The primary domain of the shop’s Online Store. */
   primaryDomain: Domain;
   /** The shop’s privacy policy. */
   privacyPolicy?: Maybe<ShopPolicy>;
@@ -6615,21 +6620,21 @@ export type RemoveCartItemMutationVariables = Exact<{
 
 export type RemoveCartItemMutation = { __typename?: 'Mutation', checkoutLineItemsRemove?: { __typename?: 'CheckoutLineItemsRemovePayload', checkout?: { __typename?: 'Checkout', id: string } | null } | null };
 
-export type PaginatedProductListFragment = { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } };
+export type PaginatedProductListFragment = { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null, id?: string | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } };
 
 export type GetAllProductsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } } };
+export type GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null, id?: string | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } } };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null }> } } | null };
+export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null, id?: string | null }> } } | null };
 
 export type GetNavItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6647,7 +6652,7 @@ export type GetCollectionByHandleQueryVariables = Exact<{
 }>;
 
 
-export type GetCollectionByHandleQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', id: string, handle: string, title: string, description: string, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } } } | null };
+export type GetCollectionByHandleQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', id: string, handle: string, title: string, description: string, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null, id?: string | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } } } | null };
 
 export type GetShopInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6719,6 +6724,7 @@ export const PaginatedProductListFragmentDoc = `
         altText
         width
         height
+        id
       }
     }
     featuredImage {
@@ -7090,6 +7096,7 @@ export const GetProductBySlugDocument = `
         altText
         width
         height
+        id
       }
     }
   }

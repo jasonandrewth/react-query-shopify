@@ -1,4 +1,5 @@
 import React from "react";
+
 import type {
   GetStaticPathsContext,
   GetStaticPropsContext,
@@ -6,12 +7,23 @@ import type {
   NextPageContext,
 } from "next";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+
 import nookies from "nookies";
 
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
-import graphqlRequestClient from "src/lib/clients/graphqlRequestClient";
+import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 
-import Layout from "components/Layout";
+import { getLayout } from "components/Layout/Layout";
+
+//Components
+import CartItem from "components/Cart/CartItem";
 
 import {
   useGetCartQuery,
@@ -21,17 +33,15 @@ import {
   CheckoutLineItem,
 } from "src/generated/graphql";
 
-const Cart = (context?: NextPageContext) => {
+const CartPage = (context?: NextPageContext) => {
   const CHECKOUT_ID = "CHECKOUT_ID";
 
   const checkoutId = nookies.get(context, CHECKOUT_ID).CHECKOUT_ID;
 
-  console.log(checkoutId);
-
   const { data, isLoading, error, isFetching } = useGetCartQuery<
     GetCartQuery,
     Error
-  >(graphqlRequestClient, {
+  >(shopifyGraphqlRequestClient, {
     checkoutId: checkoutId,
   });
 
@@ -43,27 +53,44 @@ const Cart = (context?: NextPageContext) => {
 
   if (checkoutId && data) {
     return (
-      <Layout
-        main={
-          <div>
-            <ul>
-              {
-                // @ts-ignore
-                data.node.lineItems.nodes.map((lineItem: CheckoutLineItem) => {
-                  return (
-                    <li key={lineItem.id}>
-                      {lineItem.title}{" "}
-                      <span className="text-red-700">{lineItem.quantity}</span>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          </div>
-        }
-      />
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Image</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Title</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align="center">
+              Quantity
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}
+              align="center"
+            >
+              Unit Price
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}
+              align="center"
+            >
+              Total Price
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align="right">
+              Remove
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            // @ts-ignore
+            data.node.lineItems.nodes.map((item: CheckoutLineItem) => (
+              <CartItem key={item.id} item={item} />
+            ))
+          }
+        </TableBody>
+      </Table>
     );
   }
 };
 
-export default Cart;
+CartPage.getLayout = getLayout;
+
+export default CartPage;

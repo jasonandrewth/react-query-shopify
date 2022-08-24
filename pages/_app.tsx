@@ -8,12 +8,12 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import type { Page } from "src/types/page";
-import Layout from "components/Layout";
-
+import { ManagedUIContext } from "components/UI/context";
 import NextApp, { AppProps } from "next/app";
 
-import "../styles/globals.css";
 import "swiper/scss";
+import "assets/main.css";
+import "assets/chrome-bug.css";
 
 // this should give a better typing
 type Props = AppProps & {
@@ -33,7 +33,9 @@ function App({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
-        {getLayout(<Component {...pageProps} key={router.route} />)}
+        <ManagedUIContext>
+          {getLayout(<Component {...pageProps} key={router.route} />)}
+        </ManagedUIContext>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

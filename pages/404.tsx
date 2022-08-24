@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
+//Layout
+import { getLayout } from "components/Layout/Layout";
+
 const Error = () => {
   const router = useRouter();
 
@@ -8,7 +11,9 @@ const Error = () => {
     router.replace("/");
   });
 
-  return <div>404</div>;
+  return <div className="w-screen h-screen grid self-center">404</div>;
 };
+
+Error.getLayout = getLayout;
 
 export default Error;
