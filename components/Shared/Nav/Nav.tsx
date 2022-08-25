@@ -41,8 +41,8 @@ const Navigation: React.FC<IProps> = () => {
 
   return (
     <>
-      <nav className="sticky top-0 left-0 z-50 w-screen bg-white">
-        <div className="py-4 px-4 md:px-6 xl:px-8 border-b border-black relative flex justify-between items-center">
+      <nav className="fixed z-50 top-0 left-0 w-screen">
+        <div className="bg-white z-20 py-4 px-4 md:px-6 xl:px-8 border-b border-black relative flex justify-between items-center">
           {isDesktop ? (
             <div>
               <ul className="flex last:m-0">
@@ -81,50 +81,51 @@ const Navigation: React.FC<IProps> = () => {
           </Link>
         </div>
         <Newsletter />
-        {displayMenu && !isDesktop && (
-          <div
-            className={clsx(
-              displayMenu ? "translate-y-0" : "-translate-y-32",
-              "flex flex-wrap justify-between py-4 px-4 md:px-6 xl:px-8 border-b border-black transition-transform duration-300 ease-in-out"
-            )}
-          >
-            <Link href={`/products`}>
-              <a>
-                <NavButton
-                  text="Products"
-                  isActive={router.pathname.startsWith("/products")}
-                />
-              </a>
-            </Link>
 
-            <Link href={`/subscribe`}>
-              <a>
-                <NavButton
-                  text="Subscribe"
-                  isActive={router.pathname.startsWith("/subscribe")}
-                />
-              </a>
-            </Link>
+        <div
+          className={clsx(
+            displayMenu
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-full opacity-0",
+            "flex z-10 flex-wrap justify-between bg-white py-4 px-4 md:px-6 xl:px-8 lg:hidden border-b border-black transition-all duration-300 ease-in-out"
+          )}
+        >
+          <Link href={`/products`}>
+            <a>
+              <NavButton
+                text="Products"
+                isActive={router.pathname.startsWith("/products")}
+              />
+            </a>
+          </Link>
 
-            <Link href={`/shows`}>
-              <a>
-                <NavButton
-                  text="shows"
-                  isActive={router.pathname.startsWith("/shows")}
-                />
-              </a>
-            </Link>
+          <Link href={`/subscribe`}>
+            <a>
+              <NavButton
+                text="Subscribe"
+                isActive={router.pathname.startsWith("/subscribe")}
+              />
+            </a>
+          </Link>
 
-            <Link href={`/about`}>
-              <a>
-                <NavButton
-                  text="about"
-                  isActive={router.pathname.startsWith("/about")}
-                />
-              </a>
-            </Link>
-          </div>
-        )}
+          <Link href={`/shows`}>
+            <a>
+              <NavButton
+                text="shows"
+                isActive={router.pathname.startsWith("/shows")}
+              />
+            </a>
+          </Link>
+
+          <Link href={`/about`}>
+            <a>
+              <NavButton
+                text="about"
+                isActive={router.pathname.startsWith("/about")}
+              />
+            </a>
+          </Link>
+        </div>
       </nav>
     </>
   );

@@ -68,10 +68,13 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         <div className="grid-container place-items-center grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto">
           {productData?.pages?.map((page) => (
             <>
-              {page?.products?.nodes.map((product) => {
+              {page?.products?.nodes.map((product, idx) => {
                 const productImage = product?.featuredImage || null;
                 return (
-                  <article key={product?.id} className="relative">
+                  <article
+                    key={`product-${product?.id}-${idx}`}
+                    className="relative"
+                  >
                     <Link href={`/products/${product.handle}`}>
                       <a>
                         {product.title && (

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Head from "next/head";
+import { useRouter } from "next/router";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Hydrate,
   QueryClient,
@@ -14,6 +15,26 @@ import NextApp, { AppProps } from "next/app";
 import "swiper/scss";
 import "assets/main.css";
 import "assets/chrome-bug.css";
+
+const variants = {
+  in: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      duration: 0.1,
+      delay: 0.01,
+    },
+  },
+  out: {
+    opacity: 0,
+    scale: 1,
+    y: 10,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
 
 // this should give a better typing
 type Props = AppProps & {
@@ -30,11 +51,25 @@ function App({
   // If the component has a getLayout() function, use it. Otherwise just render the page as is.
   const getLayout = Component.getLayout || ((page) => page);
 
+  const { asPath } = useRouter();
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
         <ManagedUIContext>
-          {getLayout(<Component {...pageProps} key={router.route} />)}
+          {getLayout(
+            <AnimatePresence initial={false} exitBeforeEnter>
+              <motion.div
+                key={asPath}
+                variants={variants}
+                animate="in"
+                initial="out"
+                exit="out"
+              >
+                <Component {...pageProps} key={router.route} />
+              </motion.div>
+            </AnimatePresence>
+          )}
         </ManagedUIContext>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />

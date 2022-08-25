@@ -1,10 +1,13 @@
 import React, { ReactElement, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import clsx from "clsx";
 
 import { gql } from "graphql-request";
 import { GraphQLResponse } from "graphql-request/dist/types";
 
+import { useUI } from "components/UI/context";
+//components
 import Nav from "components/Shared/Nav";
 import Footer from "components/Shared/Footer";
 
@@ -13,6 +16,8 @@ interface IProps {
 }
 
 const Layout: React.FC<IProps> = ({ main }) => {
+  const { displayMenu } = useUI();
+
   useEffect(() => {
     console.log("rerender");
   }, []);
@@ -20,7 +25,14 @@ const Layout: React.FC<IProps> = ({ main }) => {
   return (
     <>
       <Nav />
-      <main className="relative p-4 mb-10 md:p-6 xl:p-8">{main}</main>
+      <main
+        className={clsx(
+          displayMenu ? "pt-52" : "pt-36",
+          "relative px-4 mb-10 md:px-6 xl:px-8 transition-all duration-300 ease-in-out"
+        )}
+      >
+        {main}
+      </main>
       <Footer />
     </>
   );

@@ -49,7 +49,7 @@ export default function ProductsPage() {
       }
     );
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return <h1>infinite products loading...</h1>;
 
   if (error) return <h1>{JSON.stringify(error)}</h1>;
 

@@ -43,16 +43,15 @@ const ProductPage = (context?: NextPageContext) => {
     isLoading: isLoadingProduct,
     error: productError,
     data,
-  } = useGetProductBySlugQuery<
-    GetProductBySlugQuery,
-    Error
-    //@ts-ignore
-  >(shopifyGraphqlRequestClient, { slug: pid.slug });
+  } = useGetProductBySlugQuery<GetProductBySlugQuery, Error>(
+    shopifyGraphqlRequestClient,
+    { slug: pid.slug as string }
+  );
 
   const product = data?.productByHandle;
 
-  if (isLoadingProduct) return <p>Loading...</p>;
-  if (productError) return <p>Boom boy{productError.message}</p>;
+  if (isLoadingProduct) return <p>Loading Product...</p>;
+  if (productError) return <p>{productError.message}</p>;
 
   if (!product) router.replace("/");
 

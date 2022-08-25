@@ -71,6 +71,7 @@ export const UIProvider: FC<PropsWithChildren> = (props) => {
     [dispatch]
   );
   const toggleMenu = useCallback(() => {
+    console.log(state.displayMenu);
     state.displayMenu
       ? dispatch({ type: "CLOSE_MENU" })
       : dispatch({ type: "OPEN_MENU" });

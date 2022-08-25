@@ -44,7 +44,7 @@ const Newsletter = () => {
   };
 
   return (
-    <div className="flex py-4 px-4 md:px-6 xl:px-8 border-b border-black transition-transform duration-300 ease-in-out">
+    <div className="flex z-20 bg-white py-4 px-4 md:px-6 xl:px-8 border-b border-black transition-transform duration-300 ease-in-out">
       <form onSubmit={handleSubmit}>
         <label htmlFor="email-input" className="hidden">
           Mailing List

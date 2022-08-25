@@ -40,8 +40,9 @@ const ProductView: React.FC<IProps> = ({ images }) => {
                 width={image.width}
                 height={image.height}
                 layout="responsive"
-                blurDataURL={image.url} //automatically provided
-                placeholder="blur" // Optional blur-up while loading
+                priority
+                // blurDataURL={image.url} //automatically provided
+                // placeholder="blur" // Optional blur-up while loading
               />
             </SwiperSlide>
           );
