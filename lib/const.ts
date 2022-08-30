@@ -16,3 +16,6 @@ export const API_TOKEN =
 export const ADMIN_URL = `https://${STORE_DOMAIN}/admin/api/2022-07/graphql.json `;
 
 export const ADMIN_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_ADMIN_ACCESS_TOKEN;
+
+export const CART_QUERY = "CART_QUERY";
+export const CART_ITEM_COUNT_QUERY = "CART_ITEM_COUNT_QUERY";

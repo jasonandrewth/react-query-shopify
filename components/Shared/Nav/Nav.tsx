@@ -12,7 +12,7 @@ import { useUI } from "components/UI/context";
 import NavButton from "./components/NavButton";
 import Newsletter from "./components/Newsletter/Newsletter";
 
-import Logo from "Icons/Logo";
+import Logo from "components/Icons/Logo";
 
 interface IProps {
   shopName?: string;
@@ -87,7 +87,7 @@ const Navigation: React.FC<IProps> = () => {
             displayMenu
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0",
-            "flex z-10 flex-wrap justify-between bg-white py-4 px-4 md:px-6 xl:px-8 lg:hidden border-b border-black transition-all duration-300 ease-in-out"
+            "flex z-10 overflow-x-scroll justify-between bg-white py-4 px-4 md:px-6 xl:px-8 lg:hidden border-b border-black transition-all duration-300 ease-in-out"
           )}
         >
           <Link href={`/products`}>

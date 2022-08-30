@@ -51,12 +51,18 @@ const Button: React.FC<ButtonProps> = (props) => {
     className
   );
 
+  let t = "";
+  if (openSeperate) {
+    t = "_blank";
+  }
+
   return (
     <Component
       aria-pressed={active}
       data-variant={variant}
       className={rootClassName}
       disabled={disabled}
+      target={t}
       style={{
         width,
         ...style,

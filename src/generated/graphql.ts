@@ -1250,6 +1250,8 @@ export enum CheckoutErrorCode {
   LineItemNotFound = 'LINE_ITEM_NOT_FOUND',
   /** Checkout is locked. */
   Locked = 'LOCKED',
+  /** Maximum number of discount codes limit reached. */
+  MaximumDiscountCodeLimitReached = 'MAXIMUM_DISCOUNT_CODE_LIMIT_REACHED',
   /** Missing payment input. */
   MissingPaymentInput = 'MISSING_PAYMENT_INPUT',
   /** Not enough in stock. */
@@ -4348,11 +4350,20 @@ export type Mutation = {
   customerCreate?: Maybe<CustomerCreatePayload>;
   /** Updates the default address of an existing customer. */
   customerDefaultAddressUpdate?: Maybe<CustomerDefaultAddressUpdatePayload>;
-  /** Sends a reset password email to the customer, as the first step in the reset password process. */
+  /**
+   * "Sends a reset password email to the customer. The reset password email contains a reset password URL and token that you can pass to the [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the customer password."
+   *
+   */
   customerRecover?: Maybe<CustomerRecoverPayload>;
-  /** Resets a customer’s password with a token received from `CustomerRecover`. */
+  /**
+   * "Resets a customer’s password with the token received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
+   *
+   */
   customerReset?: Maybe<CustomerResetPayload>;
-  /** Resets a customer’s password with the reset password url received from `CustomerRecover`. */
+  /**
+   * "Resets a customer’s password with the reset password URL received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
+   *
+   */
   customerResetByUrl?: Maybe<CustomerResetByUrlPayload>;
   /** Updates an existing customer. */
   customerUpdate?: Maybe<CustomerUpdatePayload>;
@@ -6580,7 +6591,7 @@ export type GetCartQueryVariables = Exact<{
 }>;
 
 
-export type GetCartQuery = { __typename?: 'QueryRoot', node?: { __typename?: 'AppliedGiftCard' } | { __typename?: 'Article' } | { __typename?: 'Blog' } | { __typename?: 'Cart' } | { __typename?: 'CartLine' } | { __typename?: 'Checkout', webUrl: any, id: string, subtotalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalTaxV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, lineItems: { __typename?: 'CheckoutLineItemConnection', nodes: Array<{ __typename?: 'CheckoutLineItem', id: string, title: string, quantity: number, variant?: { __typename?: 'ProductVariant', id: string, title: string, product: { __typename?: 'Product', handle: string }, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', altText?: string | null, transformedSrc: any } | null } | null }> } } | { __typename?: 'CheckoutLineItem' } | { __typename?: 'Collection' } | { __typename?: 'Comment' } | { __typename?: 'ExternalVideo' } | { __typename?: 'GenericFile' } | { __typename?: 'Location' } | { __typename?: 'MailingAddress' } | { __typename?: 'MediaImage' } | { __typename?: 'Menu' } | { __typename?: 'MenuItem' } | { __typename?: 'Metafield' } | { __typename?: 'Model3d' } | { __typename?: 'Order' } | { __typename?: 'Page' } | { __typename?: 'Payment' } | { __typename?: 'Product' } | { __typename?: 'ProductOption' } | { __typename?: 'ProductVariant' } | { __typename?: 'Shop' } | { __typename?: 'ShopPolicy' } | { __typename?: 'UrlRedirect' } | { __typename?: 'Video' } | null };
+export type GetCartQuery = { __typename?: 'QueryRoot', node?: { __typename?: 'AppliedGiftCard' } | { __typename?: 'Article' } | { __typename?: 'Blog' } | { __typename?: 'Cart' } | { __typename?: 'CartLine' } | { __typename?: 'Checkout', webUrl: any, id: string, completedAt?: any | null, subtotalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalTaxV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, lineItems: { __typename?: 'CheckoutLineItemConnection', nodes: Array<{ __typename?: 'CheckoutLineItem', id: string, title: string, quantity: number, variant?: { __typename?: 'ProductVariant', id: string, title: string, product: { __typename?: 'Product', handle: string }, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', altText?: string | null, url: any } | null } | null }> } } | { __typename?: 'CheckoutLineItem' } | { __typename?: 'Collection' } | { __typename?: 'Comment' } | { __typename?: 'ExternalVideo' } | { __typename?: 'GenericFile' } | { __typename?: 'Location' } | { __typename?: 'MailingAddress' } | { __typename?: 'MediaImage' } | { __typename?: 'Menu' } | { __typename?: 'MenuItem' } | { __typename?: 'Metafield' } | { __typename?: 'Model3d' } | { __typename?: 'Order' } | { __typename?: 'Page' } | { __typename?: 'Payment' } | { __typename?: 'Product' } | { __typename?: 'ProductOption' } | { __typename?: 'ProductVariant' } | { __typename?: 'Shop' } | { __typename?: 'ShopPolicy' } | { __typename?: 'UrlRedirect' } | { __typename?: 'Video' } | null };
 
 export type GetCartItemCountQueryVariables = Exact<{
   checkoutId: Scalars['ID'];
@@ -6594,7 +6605,7 @@ export type CreateCartMutationVariables = Exact<{
 }>;
 
 
-export type CreateCartMutation = { __typename?: 'Mutation', checkoutCreate?: { __typename?: 'CheckoutCreatePayload', checkout?: { __typename?: 'Checkout', id: string } | null } | null };
+export type CreateCartMutation = { __typename?: 'Mutation', checkoutCreate?: { __typename?: 'CheckoutCreatePayload', checkout?: { __typename?: 'Checkout', id: string, webUrl: any } | null } | null };
 
 export type AddCartItemMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
@@ -6610,7 +6621,7 @@ export type UpdateCartItemMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCartItemMutation = { __typename?: 'Mutation', checkoutLineItemsUpdate?: { __typename?: 'CheckoutLineItemsUpdatePayload', checkout?: { __typename?: 'Checkout', id: string } | null } | null };
+export type UpdateCartItemMutation = { __typename?: 'Mutation', checkoutLineItemsUpdate?: { __typename?: 'CheckoutLineItemsUpdatePayload', checkout?: { __typename?: 'Checkout', id: string, lineItems: { __typename?: 'CheckoutLineItemConnection', edges: Array<{ __typename?: 'CheckoutLineItemEdge', node: { __typename?: 'CheckoutLineItem', quantity: number } }> } } | null } | null };
 
 export type RemoveCartItemMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
@@ -6750,6 +6761,7 @@ export const GetCartDocument = `
     ... on Checkout {
       webUrl
       id
+      completedAt
       subtotalPriceV2 {
         amount
         currencyCode
@@ -6779,11 +6791,8 @@ export const GetCartDocument = `
             }
             image {
               altText
-              transformedSrc(
-                maxWidth: 300
-                maxHeight: 400
-                crop: CENTER
-                preferredContentType: JPG
+              url(
+                transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
               )
             }
           }
@@ -6892,6 +6901,7 @@ export const CreateCartDocument = `
   checkoutCreate(input: $input) {
     checkout {
       id
+      webUrl
     }
   }
 }
@@ -6942,6 +6952,13 @@ export const UpdateCartItemDocument = `
   checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: [$lineItem]) {
     checkout {
       id
+      lineItems(first: 250) {
+        edges {
+          node {
+            quantity
+          }
+        }
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ query getCart($checkoutId: ID!) {
     ... on Checkout {
       webUrl
       id
+      completedAt
       subtotalPriceV2 {
         amount
         currencyCode
@@ -32,11 +33,13 @@ query getCart($checkoutId: ID!) {
             }
             image {
               altText
-              transformedSrc(
-                maxWidth: 300
-                maxHeight: 400
-                crop: CENTER
-                preferredContentType: JPG
+              url(
+                transform: {
+                  preferredContentType: JPG
+                  crop: CENTER
+                  maxWidth: 768
+                  maxHeight: 1024
+                }
               )
             }
           }
@@ -65,6 +68,7 @@ mutation createCart($input: CheckoutCreateInput!) {
   checkoutCreate(input: $input) {
     checkout {
       id
+      webUrl
     }
   }
 }
@@ -84,6 +88,13 @@ mutation updateCartItem(
   checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: [$lineItem]) {
     checkout {
       id
+      lineItems(first: 250) {
+        edges {
+          node {
+            quantity
+          }
+        }
+      }
     }
   }
 }
