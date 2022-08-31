@@ -5,7 +5,6 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from "next";
-import Image from "next/image";
 import { gql } from "graphql-request";
 import { GraphQLResponse } from "graphql-request/dist/types";
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";

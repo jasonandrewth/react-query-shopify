@@ -58,7 +58,7 @@ function App({
       <Hydrate state={dehydratedState}>
         <ManagedUIContext>
           {getLayout(
-            <AnimatePresence initial={false} exitBeforeEnter>
+            <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={asPath}
                 variants={variants}

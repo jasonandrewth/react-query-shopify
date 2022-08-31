@@ -1,5 +1,6 @@
 import React from "react";
 import { Plus, Minus } from "components/Icons";
+import Instagram from "components/Icons/Instagram";
 
 interface IProps {
   amount: number;
