@@ -22,7 +22,7 @@ const Footer = () => {
       <Marquee
         pauseOnHover
         gradient={false}
-        className="p-4 uppercase font-black"
+        className="p-4 uppercase font-bold"
       >
         DOOM SCROLL - Doom scroll - Doom scroll - Doom scroll - Doom scroll -
         Doom scroll - DOOM SCROLL - Doom scroll - Doom scroll - Doom scroll -

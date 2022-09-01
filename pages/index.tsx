@@ -29,7 +29,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="h-screen w-screen">
+      <div className="fixed overflow-hidden top-0 left-0 h-screen !w-screen">
         <Image src={"/giphy.gif"} alt="homepage" layout="fill"></Image>
       </div>
     </>

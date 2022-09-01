@@ -73,7 +73,7 @@ html {
 @font-face {
   font-family: "Edu Favorit";
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 100 700 900;
   font-display: optional;
   src: url(/fonts/EduFavorit/EduFavorit-Regular.woff2) format("woff2");
 }

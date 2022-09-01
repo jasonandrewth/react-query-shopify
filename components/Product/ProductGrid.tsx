@@ -18,6 +18,8 @@ import {
   useInfiniteGetAllProductsQuery,
 } from "src/generated/graphql";
 
+import { formatPrice } from "lib/shopify/usePrice";
+
 interface IProps {
   productData: InfiniteData<GetAllProductsQuery>;
   fetchNextPage?: (
@@ -65,7 +67,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         hasMore={hasNextPage}
         loader={<h4>Loading...</h4>}
       >
-        <div className="grid-container place-items-center grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto">
+        <div className="grid-container place-items-center grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto px-2 lg:px-0">
           {productData?.pages?.map((page) => (
             <>
               {page?.products?.nodes.map((product, idx) => {
@@ -73,28 +75,43 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                 return (
                   <article
                     key={`product-${product?.id}-${idx}`}
-                    className="relative"
+                    className="shadow-xl rounded-2xl border border-black overflow-clip"
                   >
+                    {productImage && (
+                      <Image
+                        src={productImage.url}
+                        alt={productImage.altText}
+                        width={500}
+                        height={500}
+                        blurDataURL={productImage.url} //automatically provided
+                        placeholder="blur" // Optional blur-up while loading
+                      />
+                    )}
                     <Link href={`/products/${product.handle}`}>
                       <a>
-                        {product.title && (
-                          <h1
-                            className="inline-block absolute left-0 bottom-0 p-4 z-40 bg-white text-black"
-                            key={product.id}
-                          >
-                            {product.title}
-                          </h1>
-                        )}
-                        {productImage && (
-                          <Image
-                            src={productImage.url}
-                            alt={productImage.altText}
-                            width={500}
-                            height={500}
-                            blurDataURL={productImage.url} //automatically provided
-                            placeholder="blur" // Optional blur-up while loading
-                          />
-                        )}
+                        <div className="grid grid-cols-4 bg-white text-black font-bold uppercase px-4 py-2">
+                          <div className="col-span-3">
+                            {product.title && (
+                              <h2 className="whitespace-normal m-0 p-0 pr-2">
+                                {product.title}
+                              </h2>
+                            )}
+                          </div>
+
+                          <div className="col-span-1 border-none border-black flex items-center justify-end">
+                            {product.priceRange.maxVariantPrice && (
+                              <h2 className="whitespace-normal m-0 p-0">
+                                {formatPrice({
+                                  amount:
+                                    product.priceRange.maxVariantPrice.amount,
+                                  currencyCode:
+                                    product.priceRange.maxVariantPrice
+                                      .currencyCode,
+                                })}
+                              </h2>
+                            )}
+                          </div>
+                        </div>
                       </a>
                     </Link>
                   </article>

@@ -27,8 +27,8 @@ const Layout: React.FC<IProps> = ({ main }) => {
       <Nav />
       <main
         className={clsx(
-          displayMenu ? "pt-52" : "pt-36",
-          "relative px-4 mb-16 md:px-6 xl:px-8 transition-all duration-300 ease-in-out"
+          displayMenu ? "mt-[183px]" : "mt-[120px]",
+          "relative px-4 pt-6 mb-16 md:px-6 xl:px-8 transition-all duration-300 ease-in-out"
         )}
       >
         {main}
