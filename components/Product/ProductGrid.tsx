@@ -75,7 +75,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                 return (
                   <article
                     key={`product-${product?.id}-${idx}`}
-                    className="shadow-xl rounded-2xl border border-black overflow-clip"
+                    className="shadow-xl rounded-2xl border border-black overflow-hidden"
                   >
                     {productImage && (
                       <Image
@@ -85,6 +85,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                         height={500}
                         blurDataURL={productImage.url} //automatically provided
                         placeholder="blur" // Optional blur-up while loading
+                        className="ounded-2xl"
                       />
                     )}
                     <Link href={`/products/${product.handle}`}>

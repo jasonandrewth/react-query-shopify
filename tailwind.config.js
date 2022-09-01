@@ -21,7 +21,7 @@ module.exports = {
         transparent: 'transparent',
         current: 'currentColor',
         'lime': '#ADFF00',
-        'pink': "#FF007A",
+        'pink': "rgba(255, 0, 122, 0.91)",
         primary: 'var(--primary)',
         'primary-2': 'var(--primary-2)',
         secondary: 'var(--secondary)',

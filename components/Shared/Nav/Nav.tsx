@@ -70,7 +70,7 @@ const Navigation: React.FC<IProps> = () => {
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
           <Link href={`/`} className="font-bold uppercase text-xl">
             <a>
-              <Logo />
+              <Logo width={164} height={"auto"} />
             </a>
           </Link>
         </div>

@@ -129,7 +129,7 @@ export const CartItem: React.FC<IProps> = ({ item, checkoutId }) => {
         "opacity-50 pointer-events-none": removing,
       })}
     >
-      <div className="flex flex-row space-x-4 py-4">
+      <div className="flex flex-row items-center space-x-4 py-4">
         <div className="w-16 h-16 relative overflow-hidden cursor-pointer z-0">
           <Link href={`/products/${item.variant.product.handle}`}>
             <a>
@@ -150,7 +150,9 @@ export const CartItem: React.FC<IProps> = ({ item, checkoutId }) => {
               <span className={s.productName}>{item.title}</span>
             </a>
           </Link>
-          <span>{item.quantity}</span>
+          <span className="text-sm font-normal tracking-wider">
+            x{item.quantity}
+          </span>
           {item.variant.selectedOptions &&
             item.variant.selectedOptions.length > 0 && (
               <div className="flex items-center pb-1">
@@ -195,15 +197,15 @@ export const CartItem: React.FC<IProps> = ({ item, checkoutId }) => {
             })}
           </span>
         </div>
+        <button onClick={handleRemove} className="">
+          <Cross width={24} height={24} />
+        </button>
       </div>
-      <Adder
+      {/* <Adder
         amount={quantity}
         add={() => setQuantity((prev) => prev + 1)}
         subtract={() => setQuantity((prev) => prev - 1)}
-      />
-      <button onClick={handleRemove}>
-        <Cross width={20} height={20} />
-      </button>
+      /> */}
     </li>
   );
 };

@@ -49,6 +49,10 @@ const CartPage = (context?: NextPageContext) => {
     //@ts-ignore
   }, [data?.node?.completedAt, context]);
 
+  if (!checkoutId) {
+    return <h1>cart empty no cookie</h1>;
+  }
+
   if (isLoading) return <h1>loading...</h1>;
 
   if (error)
@@ -68,7 +72,7 @@ const CartPage = (context?: NextPageContext) => {
     } else {
       if (isSuccess) {
         return (
-          <div className="px-4 sm:px-6 flex-1">
+          <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
             My Cart
             {/* <Text variant="pageHeading">My Cart</Text>
         <Text variant="sectionHeading">Review your Order</Text> */}
@@ -98,7 +102,7 @@ const CartPage = (context?: NextPageContext) => {
                   }
                   Component="a"
                   openSeperate
-                  className="py-3 w-full md:w-auto"
+                  className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
                 >
                   Proceed to Checkout
                 </Button>
