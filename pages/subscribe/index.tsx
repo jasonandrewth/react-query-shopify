@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { NextSeo } from "next-seo";
 
 //Data Fetching
 import { useQuery, dehydrate, QueryClient } from "@tanstack/react-query";

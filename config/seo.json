@@ -1,0 +1,21 @@
+{
+  "title": "Ditto Nation",
+  "titleTemplate": "%s - Ditto Nation",
+  "description": "Ditto Nation - https://www.ditto-nation.com",
+  "openGraph": {
+    "title": "Ditto Nation",
+    "description": "Ditto Nation",
+    "type": "website",
+    "locale": "en_IE",
+    "url": "https://ditto-nation.com",
+    "site_name": "Ditto Nation",
+    "images": [
+      {
+        "url": "/card.png",
+        "width": 800,
+        "height": 600,
+        "alt": "Ditto Nation"
+      }
+    ]
+  }
+}

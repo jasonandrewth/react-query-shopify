@@ -7,6 +7,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { DefaultSeo } from "next-seo";
+import config from "config/seo.json";
 
 import type { Page } from "src/types/page";
 import { ManagedUIContext } from "components/UI/context";
@@ -56,6 +58,7 @@ function App({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
+        <DefaultSeo {...config} />
         <ManagedUIContext>
           {getLayout(
             <AnimatePresence initial={false} mode="wait">

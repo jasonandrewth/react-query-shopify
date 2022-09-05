@@ -14,9 +14,7 @@ import { gql } from "graphql-request";
 import { GraphQLResponse } from "graphql-request/dist/types";
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 // Import Swiper React components
-import { Swiper } from "swiper";
-import { Swiper as SwiperSlider, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Lazy } from "swiper";
+import { NextSeo } from "next-seo";
 
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 
@@ -55,7 +53,28 @@ const ProductPage = (context?: NextPageContext) => {
 
   if (!product) router.replace("/");
 
-  return <ProductSingle context={context} product={product as Product} />;
+  return (
+    <>
+      <NextSeo
+        title={product.title}
+        description={product.description}
+        openGraph={{
+          type: "website",
+          title: product.title,
+          description: product.description,
+          images: [
+            {
+              url: product.images.nodes[0]?.url!,
+              width: 800,
+              height: 600,
+              alt: product.title,
+            },
+          ],
+        }}
+      />
+      <ProductSingle context={context} product={product as Product} />
+    </>
+  );
 };
 
 ProductPage.getLayout = getLayout;

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { NextSeo } from "next-seo";
 
 import type {
   GetStaticPathsContext,
@@ -62,12 +63,15 @@ const CartPage = (context?: NextPageContext) => {
 
   if (error)
     return (
-      <div className="flex-1 px-4 flex flex-col justify-center items-center">
-        <h2 className="pt-6 text-xl font-light text-center">
-          We couldn’t process the purchase. Please check your card information
-          and try again.
-        </h2>
-      </div>
+      <>
+        <NextSeo title="About" />
+        <div className="flex-1 px-4 flex flex-col justify-center items-center">
+          <h2 className="pt-6 text-xl font-light text-center">
+            We couldn’t process the purchase. Please check your card information
+            and try again.
+          </h2>
+        </div>
+      </>
     );
 
   if (data) {

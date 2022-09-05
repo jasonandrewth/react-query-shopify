@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NextSeo } from "next-seo";
 
 //Data Fetching
 import { useQuery, dehydrate, QueryClient } from "@tanstack/react-query";
@@ -16,27 +17,40 @@ const ShowsPage = ({ data }) => {
   const posts = data.postData.data;
 
   return (
-    <div className="absolute top-0 left-0 !w-screen">
-      {posts.map((post, idx) => {
-        return (
-          <Link
-            key={idx}
-            passHref
-            href={`https://patreon.com${post.attributes.url}`}
-          >
-            <a target="_blank">
-              <article
-                key={idx}
-                className="w-full py-6 px-8 text-2xl hover:bg-pink transition-all duration-200 ease-in-out"
-              >
-                <h2 className="uppercase font-bold">{post.attributes.title}</h2>
-                {/* <p>{post.attributes.content}</p> */}
-              </article>
-            </a>
-          </Link>
-        );
-      })}
-    </div>
+    <>
+      <NextSeo
+        title={"All Shows"}
+        description={"Display All Shows"}
+        openGraph={{
+          type: "website",
+          title: "All Shows",
+          description: "Display All Shows",
+        }}
+      />
+      <div className="absolute top-0 left-0 !w-screen">
+        {posts.map((post, idx) => {
+          return (
+            <Link
+              key={idx}
+              passHref
+              href={`https://patreon.com${post.attributes.url}`}
+            >
+              <a target="_blank">
+                <article
+                  key={idx}
+                  className="w-full py-6 px-8 text-2xl hover:bg-pink transition-all duration-200 ease-in-out"
+                >
+                  <h2 className="uppercase font-bold">
+                    {post.attributes.title}
+                  </h2>
+                  {/* <p>{post.attributes.content}</p> */}
+                </article>
+              </a>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
