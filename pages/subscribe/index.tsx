@@ -25,7 +25,7 @@ const SubscribePage = ({ data }) => {
   );
 
   return (
-    <div className="grid-container place-items-center grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto px-2 lg:px-0">
+    <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0">
       {data.tierData.map((tier, idx) => {
         return (
           <Link
@@ -36,7 +36,7 @@ const SubscribePage = ({ data }) => {
             <a target="_blank">
               <article
                 key={idx}
-                className="shadow-xl rounded-2xl border border-black overflow-clip"
+                className="shadow-xl rounded-lg border border-black overflow-hidden"
               >
                 <Image
                   src={tier.attributes.image_url}
@@ -45,9 +45,10 @@ const SubscribePage = ({ data }) => {
                   height={500}
                   blurDataURL={tier.attributes.image_url} //automatically provided
                   placeholder="blur" // Optional blur-up while loading
+                  className="w-full p-0 m-0"
                 />
-                <div className="px-4">
-                  <h2 className="whitespace-normal m-0 p-0 pr-2 font-bold">
+                <div className="px-4 max-w-[500px]">
+                  <h2 className="whitespace-normal m-0 py-2 pr-2 font-bold">
                     {tier.attributes.title}: {tier.attributes.amount_cents} per
                     month
                   </h2>
@@ -56,6 +57,7 @@ const SubscribePage = ({ data }) => {
                       dangerouslySetInnerHTML={{
                         __html: tier.attributes.description as string,
                       }}
+                      className="pb-2 md:pb-4"
                     ></div>
                   )}
                 </div>
@@ -85,6 +87,7 @@ export const getStaticProps = async () => {
         tierData: tierData.included,
       },
     },
+    revalidate: 10, // In seconds
   };
 };
 

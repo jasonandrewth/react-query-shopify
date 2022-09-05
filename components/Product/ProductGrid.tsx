@@ -67,30 +67,31 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         hasMore={hasNextPage}
         loader={<h4>Loading...</h4>}
       >
-        <div className="grid-container place-items-center grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto px-2 lg:px-0">
-          {productData?.pages?.map((page) => (
-            <>
+        <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0">
+          {productData?.pages?.map((page, idx) => (
+            <React.Fragment key={`page-${page.__typename}-${idx}`}>
               {page?.products?.nodes.map((product, idx) => {
                 const productImage = product?.featuredImage || null;
                 return (
                   <article
                     key={`product-${product?.id}-${idx}`}
-                    className="shadow-xl rounded-2xl border border-black overflow-hidden"
+                    className="shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-lg border border-black overflow-hidden transition-all duration-200 ease-in-out"
                   >
-                    {productImage && (
-                      <Image
-                        src={productImage.url}
-                        alt={productImage.altText}
-                        width={500}
-                        height={500}
-                        blurDataURL={productImage.url} //automatically provided
-                        placeholder="blur" // Optional blur-up while loading
-                        className="ounded-2xl"
-                      />
-                    )}
                     <Link href={`/products/${product.handle}`}>
                       <a>
-                        <div className="grid grid-cols-4 bg-white text-black font-bold uppercase px-4 py-2">
+                        {productImage && (
+                          <Image
+                            src={productImage.url}
+                            alt={productImage.altText}
+                            width={500}
+                            height={500}
+                            blurDataURL={productImage.url} //automatically provided
+                            placeholder="blur" // Optional blur-up while loading
+                            className="rounded-t-md"
+                          />
+                        )}
+
+                        <div className="grid grid-cols-4 max-w-[500px] bg-white text-black font-bold uppercase px-4 py-2">
                           <div className="col-span-3">
                             {product.title && (
                               <h2 className="whitespace-normal m-0 p-0 pr-2">
@@ -118,7 +119,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                   </article>
                 );
               })}
-            </>
+            </React.Fragment>
           ))}
         </div>
       </InfiniteScroll>

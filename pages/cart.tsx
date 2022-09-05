@@ -41,19 +41,24 @@ const CartPage = (context?: NextPageContext) => {
     checkoutId: checkoutId,
   });
 
+  const emptyMessage = (
+    <h1 className="text-center uppercase font-bold text-2xl">cart empty</h1>
+  );
+
   useEffect(() => {
     //@ts-ignore
     if (data?.node?.completedAt) {
+      console.log("destroy");
       destroyCookie(context, CHECKOUT_ID);
     }
     //@ts-ignore
   }, [data?.node?.completedAt, context]);
 
   if (!checkoutId) {
-    return <h1>cart empty no cookie</h1>;
+    return <h1 className="text-center block mx-auto">cart empty no cookie</h1>;
   }
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return emptyMessage;
 
   if (error)
     return (
@@ -68,7 +73,7 @@ const CartPage = (context?: NextPageContext) => {
   if (data) {
     // @ts-ignore
     if (data?.node?.lineItems?.nodes.length <= 0) {
-      return <h1>cart empty</h1>;
+      return emptyMessage;
     } else {
       if (isSuccess) {
         return (

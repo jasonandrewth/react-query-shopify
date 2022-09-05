@@ -72,7 +72,7 @@ function App({
           )}
         </ManagedUIContext>
       </Hydrate>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 }

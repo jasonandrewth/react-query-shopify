@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -11,6 +11,7 @@ import { useUI } from "components/UI/context";
 //Components
 import NavButton from "./components/NavButton";
 import Newsletter from "./components/Newsletter/Newsletter";
+import CartIndicator from "./components/CartIndicator";
 
 import Logo from "components/Icons/Logo";
 import Bag from "components/Icons/Bag";
@@ -21,7 +22,8 @@ interface IProps {
 
 const links = [
   { href: "/products", text: "products" },
-  { href: "/test", text: "testing" },
+  { href: "/subscribe", text: "subscribe" },
+  { href: "/shows", text: "shows" },
   { href: "/about", text: "about" },
 ];
 
@@ -57,7 +59,10 @@ const Navigation: React.FC<IProps> = () => {
             </ul>
           </div>
         ) : (
-          <div onClick={toggleMenu} className="pointer lg:hidden space-y-2">
+          <div
+            onClick={toggleMenu}
+            className="cursor-pointer lg:hidden space-y-2"
+          >
             <span
               className={clsx(
                 displayMenu && "translate-y-0",
@@ -76,14 +81,22 @@ const Navigation: React.FC<IProps> = () => {
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
           <Link href={`/`} className="font-bold uppercase text-xl">
             <a>
-              <Logo width={164} height={"auto"} />
+              <Logo
+                width={isDesktop ? 186 : 155}
+                height={isDesktop ? 26 : 22}
+              />
             </a>
           </Link>
         </div>
 
-        <Link href={`/cart`} className="font-bold uppercase text-xl">
-          <Bag className="h-6 w-6" />
-        </Link>
+        <div className="font-bold uppercase text-xl cursor-pointer">
+          <Link href={`/cart`}>
+            <a>
+              <Bag width={22} height={22} />
+            </a>
+          </Link>
+        </div>
+        {/* <CartIndicator /> */}
       </div>
       <Newsletter />
 
