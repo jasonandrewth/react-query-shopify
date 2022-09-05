@@ -13,6 +13,7 @@ import NavButton from "./components/NavButton";
 import Newsletter from "./components/Newsletter/Newsletter";
 
 import Logo from "components/Icons/Logo";
+import Bag from "components/Icons/Bag";
 
 interface IProps {
   shopName?: string;
@@ -25,13 +26,7 @@ const links = [
 ];
 
 const Navigation: React.FC<IProps> = () => {
-  const [toggle, setToggle] = useState(false);
-
   const isDesktop = useMedia({ minWidth: "1024px" });
-
-  const toggleHandler = () => {
-    setToggle((prev) => !prev);
-  };
 
   //Router
   const router = useRouter();
@@ -62,8 +57,19 @@ const Navigation: React.FC<IProps> = () => {
             </ul>
           </div>
         ) : (
-          <div onClick={toggleMenu} className="lg:hidden">
-            Menu
+          <div onClick={toggleMenu} className="pointer lg:hidden space-y-2">
+            <span
+              className={clsx(
+                displayMenu && "translate-y-0",
+                "-translate-y-1/2 block w-8 h-0.5 bg-black transform transition duration-300 ease-in-out"
+              )}
+            ></span>
+            <span
+              className={clsx(
+                displayMenu && "translate-y-0",
+                "translate-y-1/2 block w-8 h-0.5 bg-black transform transition duration-300 ease-in-out"
+              )}
+            ></span>
           </div>
         )}
 
@@ -76,7 +82,7 @@ const Navigation: React.FC<IProps> = () => {
         </div>
 
         <Link href={`/cart`} className="font-bold uppercase text-xl">
-          Cart
+          <Bag className="h-6 w-6" />
         </Link>
       </div>
       <Newsletter />
