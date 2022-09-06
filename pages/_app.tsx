@@ -58,7 +58,10 @@ function App({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
-        <DefaultSeo {...config} />
+        <DefaultSeo
+          {...config}
+          // hello
+        />
         <ManagedUIContext>
           {getLayout(
             <AnimatePresence initial={false} mode="wait">

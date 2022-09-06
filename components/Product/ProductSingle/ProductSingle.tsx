@@ -97,7 +97,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-2 md:px-4 lg:px-6 mx-auto max-w-[1920px]">
       <ProductView images={product?.images?.nodes} />
       <div className="flex flex-col md:px-8">
         <h1 className="font-extrabold text-3xl mt-3 md:m-0">

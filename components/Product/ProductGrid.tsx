@@ -67,7 +67,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         hasMore={hasNextPage}
         loader={<h4>Loading...</h4>}
       >
-        <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0">
+        <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-6 max-w-[1920px]">
           {productData?.pages?.map((page, idx) => (
             <React.Fragment key={`page-${page.__typename}-${idx}`}>
               {page?.products?.nodes.map((product, idx) => {

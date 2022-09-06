@@ -26,7 +26,7 @@ const SubscribePage = ({ data }) => {
   );
 
   return (
-    <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0">
+    <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0  max-w-[1920px]">
       {data.tierData.map((tier, idx) => {
         return (
           <Link

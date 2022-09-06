@@ -43,7 +43,10 @@ const CartPage = (context?: NextPageContext) => {
   });
 
   const emptyMessage = (
-    <h1 className="text-center uppercase font-bold text-2xl">cart empty</h1>
+    <>
+      <NextSeo title="Cart" />
+      <h1 className="text-center uppercase font-bold text-2xl">cart empty</h1>
+    </>
   );
 
   useEffect(() => {
@@ -64,8 +67,8 @@ const CartPage = (context?: NextPageContext) => {
   if (error)
     return (
       <>
-        <NextSeo title="About" />
-        <div className="flex-1 px-4 flex flex-col justify-center items-center">
+        <NextSeo title="Cart" />
+        <div className="flex-1 px-4 flex flex-col justify-center items-center max-w-[1920px]">
           <h2 className="pt-6 text-xl font-light text-center">
             We couldn’t process the purchase. Please check your card information
             and try again.
@@ -81,43 +84,50 @@ const CartPage = (context?: NextPageContext) => {
     } else {
       if (isSuccess) {
         return (
-          <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
-            My Cart
-            {/* <Text variant="pageHeading">My Cart</Text>
+          <>
+            <NextSeo title="Cart" />
+            <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
+              My Cart
+              {/* <Text variant="pageHeading">My Cart</Text>
         <Text variant="sectionHeading">Review your Order</Text> */}
-            <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accent-2 border-b border-accent-2">
+              <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accent-2 border-b border-accent-2">
+                {
+                  // @ts-ignore
+                  data.node.lineItems.nodes.map((item: CheckoutLineItem) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      checkoutId={checkoutId}
+                    />
+                  ))
+                }
+              </ul>
               {
-                // @ts-ignore
-                data.node.lineItems.nodes.map((item: CheckoutLineItem) => (
-                  <CartItem key={item.id} item={item} checkoutId={checkoutId} />
-                ))
+                //@ts-ignore
+                data?.node?.lineItems?.nodes.length <= 0 ? (
+                  <Button
+                    href="/"
+                    Component="a"
+                    className="py-3 w-full md:w-auto"
+                  >
+                    Continue Shopping
+                  </Button>
+                ) : (
+                  <Button
+                    href={
+                      //@ts-ignore
+                      data?.node?.webUrl
+                    }
+                    Component="a"
+                    openSeperate
+                    className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
+                  >
+                    Proceed to Checkout
+                  </Button>
+                )
               }
-            </ul>
-            {
-              //@ts-ignore
-              data?.node?.lineItems?.nodes.length <= 0 ? (
-                <Button
-                  href="/"
-                  Component="a"
-                  className="py-3 w-full md:w-auto"
-                >
-                  Continue Shopping
-                </Button>
-              ) : (
-                <Button
-                  href={
-                    //@ts-ignore
-                    data?.node?.webUrl
-                  }
-                  Component="a"
-                  openSeperate
-                  className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
-                >
-                  Proceed to Checkout
-                </Button>
-              )
-            }
-          </div>
+            </div>
+          </>
         );
       }
     }

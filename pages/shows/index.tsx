@@ -8,12 +8,6 @@ import { patreonRequestClient } from "src/lib/clients/axiosClient";
 import { getLayout } from "components/Layout/Layout";
 
 const ShowsPage = ({ data }) => {
-  //   const { isLoading, isError, data, error } = useQuery(
-  //     ["patreon"],
-  //     async () => await patreonRequestClient.get("campaigns/6702424/posts"),
-  //     { initialData: postData }
-  //   );
-
   const posts = data.postData.data;
 
   return (
