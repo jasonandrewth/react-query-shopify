@@ -68,7 +68,7 @@ const CartPage = (context?: NextPageContext) => {
     return (
       <>
         <NextSeo title="Cart" />
-        <div className="flex-1 px-4 flex flex-col justify-center items-center max-w-[1920px]">
+        <div className="flex-1 px-4 flex flex-col justify-center items-center max-w-8xl">
           <h2 className="pt-6 text-xl font-light text-center">
             We couldn’t process the purchase. Please check your card information
             and try again.

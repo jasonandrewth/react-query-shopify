@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -52,6 +52,35 @@ function App({
 
   // If the component has a getLayout() function, use it. Otherwise just render the page as is.
   const getLayout = Component.getLayout || ((page) => page);
+
+  useEffect(() => {
+    console.log(
+      `  
+           .o######0o.
+          0###########0.      .
+         o####" "######0.    (## m#o
+         ####(    ######0  ._ ##.##"nn
+         0####o   ###" ## (##o.######"
+  o00o.    0#####o,##. ,#"  "#######(
+  .0#####0.   0###########0     ########
+  .0#######0.   "0#########"  _.o###'"00"
+  .0###########o._ ""################       _  .
+  0####" "#########################0      .0#0n0
+  #####.   ""#####################"    _  0#####
+  0#####.     "###################._.o##o.#####"
+  "0#####..##mn ""#############################
+  "0#######""_    ""##################"#####"
+  ""####m###m      ""############"   ####
+  .########"""         .########"     "##"
+  ####"##"###o        (0######"        ""
+  "##".###,##     .o#o ""####.
+      "##"      .0############.
+              .n##======####### 
+   
+   WEB BY JASON ANDREW jason-andrew.com
+   `
+    );
+  }, []);
 
   const { asPath } = useRouter();
 

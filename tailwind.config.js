@@ -13,6 +13,9 @@ module.exports = {
         "screen/4": "calc(100vh / 4)",
         "screen/5": "calc(100vh / 5)",
       }),
+      screens: {
+        'xs': '340px',
+      },
 
       maxWidth: {
         '8xl': '1920px',
@@ -65,6 +68,5 @@ module.exports = {
         120: '1.2',
       },
     },
-  },
-  plugins: [],
+  }
 }

@@ -21,7 +21,7 @@ const ShippingPage = () => {
     <Layout
       main={
         <div
-          className="max-w-[1920px]"
+          className="max-w-8xl"
           dangerouslySetInnerHTML={{ __html: data?.shop?.shippingPolicy?.body }}
         />
       }

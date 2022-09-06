@@ -69,7 +69,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
         _context: unknown
       ) => {
         queryClient.invalidateQueries(useAddCartItemMutation.getKey());
-        console.log("mutation data", data);
+        // console.log("mutation data", data);
         // setResponse(data);
       },
       onError: () => {
@@ -83,7 +83,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
       const checkoutId = nookies.get(context, CHECKOUT_ID).CHECKOUT_ID;
       await mutateCartItemAsync({ checkoutId: checkoutId, lineItem: lineItem });
       // await ShopifyService.addCartItem({ checkoutId, lineItem });
-      console.log("worked, checkoutid:", checkoutId);
+      // console.log("worked, checkoutid:", checkoutId);
     } catch (error) {
       const { checkoutCreate } = await mutateCreateCartAsync({
         input: { lineItems: [lineItem] },
@@ -97,7 +97,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-2 md:px-4 lg:px-6 mx-auto max-w-[1920px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-2 md:px-4 lg:px-6 mx-auto max-w-8xl">
       <ProductView images={product?.images?.nodes} />
       <div className="flex flex-col md:px-8">
         <h1 className="font-extrabold text-3xl mt-3 md:m-0">

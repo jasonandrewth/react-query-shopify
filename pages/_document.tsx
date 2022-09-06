@@ -3,9 +3,12 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html lang="en">
-      <head
-        dangerouslySetInnerHTML={{
-          __html: `<!-- /*   .o######0o.
+      <Head>
+        <script
+          className="openMeIfCurious"
+          dangerouslySetInnerHTML={{
+            __html: `/*  
+         .o######0o.
         0###########0.      .
        o####" "######0.    (## m#o
        ####(    ######0  ._ ##.##"nn
@@ -27,10 +30,9 @@ o00o.    0#####o,##. ,#"  "#######(
             .n##======####### 
  
  WEB BY JASON ANDREW jason-andrew.com
-            */ -->`,
-        }}
-      ></head>
-      <Head>
+ */`,
+          }}
+        />
         <link
           rel="preload"
           href="/fonts/EduFavorit/EduFavorit-Regular.woff2"

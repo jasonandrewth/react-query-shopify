@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 
+import { formatPrice } from "lib/shopify/usePrice";
 //Data Fetching
 import { useQuery, dehydrate, QueryClient } from "@tanstack/react-query";
 import { patreonRequestClient } from "src/lib/clients/axiosClient";
@@ -26,7 +27,7 @@ const SubscribePage = ({ data }) => {
   );
 
   return (
-    <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0  max-w-[1920px]">
+    <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0  max-w-8xl">
       {data.tierData.map((tier, idx) => {
         return (
           <Link
@@ -50,8 +51,8 @@ const SubscribePage = ({ data }) => {
                 />
                 <div className="px-4 max-w-[500px]">
                   <h2 className="whitespace-normal m-0 py-2 pr-2 font-bold">
-                    {tier.attributes.title}: {tier.attributes.amount_cents} per
-                    month
+                    {tier.attributes.title}: {tier.attributes.amount_cents / 10}
+                    $ per month
                   </h2>
                   {tier?.attributes?.description && (
                     <div
