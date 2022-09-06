@@ -18,6 +18,7 @@ import { getLayout } from "components/Layout/Layout";
 //Components
 import CartItem from "components/Cart/CartItem";
 import Button from "components/UI/Button";
+import Loader from "components/UI/Loader";
 
 import {
   useGetCartQuery,
@@ -58,11 +59,11 @@ const CartPage = (context?: NextPageContext) => {
     //@ts-ignore
   }, [data?.node?.completedAt, context]);
 
+  if (isLoading) return <Loader />;
+
   if (!checkoutId) {
     return emptyMessage;
   }
-
-  if (isLoading) return emptyMessage;
 
   if (error)
     return (

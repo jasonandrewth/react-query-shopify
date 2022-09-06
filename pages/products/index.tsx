@@ -7,6 +7,7 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import { getLayout } from "components/Layout/Layout";
 import ProductGrid from "components/Product/ProductGrid";
+import Loader from "components/UI/Loader";
 
 import {
   Product,
@@ -41,7 +42,7 @@ export default function ProductsPage() {
       }
     );
 
-  if (isLoading) return <h1>infinite products loading...</h1>;
+  if (isLoading) return <Loader />;
 
   if (error) return <h1>{JSON.stringify(error)}</h1>;
 

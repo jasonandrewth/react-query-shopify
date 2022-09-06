@@ -18,6 +18,8 @@ import {
   useInfiniteGetAllProductsQuery,
 } from "src/generated/graphql";
 
+import Loader from "components/UI/Loader";
+
 import { formatPrice } from "lib/shopify/usePrice";
 
 interface IProps {
@@ -55,7 +57,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
       }
     );
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return <Loader />;
 
   if (error) return <h1>{JSON.stringify(error)}</h1>;
 
@@ -65,7 +67,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         dataLength={productData?.pages?.length * 20}
         next={fetchNextPage}
         hasMore={hasNextPage}
-        loader={<h4>Loading...</h4>}
+        loader={<Loader />}
       >
         <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-6 max-w-8xl">
           {productData?.pages?.map((page, idx) => (

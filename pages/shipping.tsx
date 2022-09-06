@@ -5,6 +5,7 @@ import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClien
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import Layout from "components/Layout";
+import Loader from "components/UI/Loader";
 
 import { useGetShopInfoQuery, GetShopInfoQuery } from "src/generated/graphql";
 
@@ -14,8 +15,8 @@ const ShippingPage = () => {
     Error
   >(shopifyGraphqlRequestClient);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Boom boy{error.message}</p>;
+  if (isLoading) return <Loader />;
+  if (error) return null;
 
   return (
     <Layout
