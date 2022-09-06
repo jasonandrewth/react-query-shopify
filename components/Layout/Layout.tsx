@@ -29,9 +29,9 @@ const Layout: React.FC<IProps> = ({ main }) => {
         // math >.<
         className={clsx(
           displayMenu
-            ? "top-[181px] min-h-[calc(100vh-253px)]"
-            : "top-[118px] min-h-[calc(100vh-190px)]",
-          "relative py-4 px-4 mb-14 md:px-6 xl:px-8 lg:py-8 lg:pb-16 lg:mb-0 lg:min-h-[calc(100vh-214px)] transition-all duration-300 ease-in-out"
+            ? "top-[181px] min-h-[calc(100%-253px)]"
+            : "top-[118px] min-h-[calc(100%-190px)]",
+          "relative py-4 px-4 pb-20 md:px-6 xl:px-8 lg:py-8 lg:pb-16 lg:mb-0 lg:min-h-[calc(100vh-214px)] transition-all duration-300 ease-in-out"
         )}
       >
         {main}
