@@ -59,7 +59,7 @@ const CartPage = (context?: NextPageContext) => {
   }, [data?.node?.completedAt, context]);
 
   if (!checkoutId) {
-    return <h1 className="text-center block mx-auto">cart empty no cookie</h1>;
+    return emptyMessage;
   }
 
   if (isLoading) return emptyMessage;
