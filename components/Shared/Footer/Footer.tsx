@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="fixed bottom-0 left-0 z-50 w-screen bg-black text-white grid grid-cols-[auto_auto]">
       <div className="flex border-r border-r-white p-4">
         <button className="hover:opacity-80 mr-2">
-          <Patreon className="h-6 w-6" />
+          <Patreon className="h-5 w-6" />
         </button>
         <button className="hover:opacity-80 mr-2">
           <img className="max-h-6" src="/instagram.svg" alt="Instagram Logo" />
@@ -26,7 +26,9 @@ const Footer = () => {
       >
         DOOM SCROLL - Doom scroll - Doom scroll - Doom scroll - Doom scroll -
         Doom scroll - DOOM SCROLL - Doom scroll - Doom scroll - Doom scroll -
-        Doom scroll - Doom scroll -
+        Doom scroll - Doom scroll - DOOM SCROLL - Doom scroll - Doom scroll -
+        Doom scroll - Doom scroll - Doom scroll - DOOM SCROLL - Doom scroll -
+        Doom scroll - Doom scroll - Doom scroll - Doom scroll -
       </Marquee>
     </footer>
   );
