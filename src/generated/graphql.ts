@@ -45,14 +45,14 @@ export type AppliedGiftCard = Node & {
   __typename?: 'AppliedGiftCard';
   /**
    * The amount that was taken from the gift card by applying it.
-   * @deprecated Use `amountUsedV2` instead
+   * @deprecated Use `amountUsedV2` instead.
    */
   amountUsed: Scalars['Money'];
   /** The amount that was taken from the gift card by applying it. */
   amountUsedV2: MoneyV2;
   /**
    * The amount left on the gift card.
-   * @deprecated Use `balanceV2` instead
+   * @deprecated Use `balanceV2` instead.
    */
   balance: Scalars['Money'];
   /** The amount left on the gift card. */
@@ -70,7 +70,7 @@ export type Article = HasMetafields & Node & OnlineStorePublishable & {
   __typename?: 'Article';
   /**
    * The article's author.
-   * @deprecated Use `authorV2` instead
+   * @deprecated Use `authorV2` instead.
    */
   author: ArticleAuthor;
   /** The article's author. */
@@ -408,7 +408,7 @@ export type Cart = Node & {
   discountCodes: Array<CartDiscountCode>;
   /**
    * The estimated costs that the buyer will pay at checkout. The estimated costs are subject to change and changes will be reflected at checkout. The `estimatedCost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
-   * @deprecated Use `cost` instead
+   * @deprecated Use `cost` instead.
    */
   estimatedCost: CartEstimatedCost;
   /** A globally-unique identifier. */
@@ -714,7 +714,7 @@ export type CartLine = Node & {
   discountAllocations: Array<CartDiscountAllocation>;
   /**
    * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
-   * @deprecated Use `cost` instead
+   * @deprecated Use `cost` instead.
    */
   estimatedCost: CartLineEstimatedCost;
   /** A globally-unique identifier. */
@@ -898,7 +898,7 @@ export type Checkout = Node & {
   orderStatusUrl?: Maybe<Scalars['URL']>;
   /**
    * The amount left to be paid. This is equal to the cost of the line items, taxes and shipping minus discounts and gift cards.
-   * @deprecated Use `paymentDueV2` instead
+   * @deprecated Use `paymentDueV2` instead.
    */
   paymentDue: Scalars['Money'];
   /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards. */
@@ -924,7 +924,7 @@ export type Checkout = Node & {
   shippingLine?: Maybe<ShippingRate>;
   /**
    * Price of the checkout before shipping and taxes.
-   * @deprecated Use `subtotalPriceV2` instead
+   * @deprecated Use `subtotalPriceV2` instead.
    */
   subtotalPrice: Scalars['Money'];
   /** The price at checkout before duties, shipping, and taxes. */
@@ -937,14 +937,14 @@ export type Checkout = Node & {
   totalDuties?: Maybe<MoneyV2>;
   /**
    * The sum of all the prices of all the items in the checkout, taxes and discounts included.
-   * @deprecated Use `totalPriceV2` instead
+   * @deprecated Use `totalPriceV2` instead.
    */
   totalPrice: Scalars['Money'];
   /** The sum of all the prices of all the items in the checkout, including duties, taxes, and discounts. */
   totalPriceV2: MoneyV2;
   /**
    * The sum of all the taxes applied to the line items and shipping lines in the checkout.
-   * @deprecated Use `totalTaxV2` instead
+   * @deprecated Use `totalTaxV2` instead.
    */
   totalTax: Scalars['Money'];
   /** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
@@ -1000,7 +1000,7 @@ export type CheckoutAttributesUpdateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1032,7 +1032,7 @@ export type CheckoutCompleteFreePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1048,7 +1048,7 @@ export type CheckoutCompleteWithCreditCardV2Payload = {
   payment?: Maybe<Payment>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1064,7 +1064,7 @@ export type CheckoutCompleteWithTokenizedPaymentV3Payload = {
   payment?: Maybe<Payment>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1103,7 +1103,7 @@ export type CheckoutCreatePayload = {
   queueToken?: Maybe<Scalars['String']>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1119,7 +1119,7 @@ export type CheckoutCustomerAssociateV2Payload = {
   customer?: Maybe<Customer>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1133,7 +1133,7 @@ export type CheckoutCustomerDisassociateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1147,7 +1147,7 @@ export type CheckoutDiscountCodeApplyV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1161,7 +1161,7 @@ export type CheckoutDiscountCodeRemovePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1175,7 +1175,7 @@ export type CheckoutEmailUpdateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1281,7 +1281,7 @@ export type CheckoutGiftCardRemoveV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1295,7 +1295,7 @@ export type CheckoutGiftCardsAppendPayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1376,7 +1376,7 @@ export type CheckoutLineItemsAddPayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1390,7 +1390,7 @@ export type CheckoutLineItemsRemovePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1413,7 +1413,7 @@ export type CheckoutLineItemsUpdatePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1427,7 +1427,7 @@ export type CheckoutShippingAddressUpdateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1441,7 +1441,7 @@ export type CheckoutShippingLineUpdatePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2643,7 +2643,7 @@ export type CustomerAccessTokenCreatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2707,7 +2707,7 @@ export type CustomerActivatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2721,7 +2721,7 @@ export type CustomerAddressCreatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2735,7 +2735,7 @@ export type CustomerAddressDeletePayload = {
   deletedCustomerAddressId?: Maybe<Scalars['String']>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2749,7 +2749,7 @@ export type CustomerAddressUpdatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2784,7 +2784,7 @@ export type CustomerCreatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2798,7 +2798,7 @@ export type CustomerDefaultAddressUpdatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2844,7 +2844,7 @@ export type CustomerRecoverPayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2860,7 +2860,7 @@ export type CustomerResetByUrlPayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2884,7 +2884,7 @@ export type CustomerResetPayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2925,7 +2925,7 @@ export type CustomerUpdatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -3112,7 +3112,7 @@ export type ExternalVideo = Media & Node & {
   embedUrl: Scalars['URL'];
   /**
    * The URL.
-   * @deprecated Use `originUrl` instead
+   * @deprecated Use `originUrl` instead.
    */
   embeddedUrl: Scalars['URL'];
   /** The host of the external video. */
@@ -3320,12 +3320,12 @@ export type Image = {
    *
    * If there are any existing transformations in the original source URL, they will remain and not be stripped.
    *
-   * @deprecated Use `url` instead
+   * @deprecated Use `url` instead.
    */
   originalSrc: Scalars['URL'];
   /**
    * The location of the image as a URL.
-   * @deprecated Use `url` instead
+   * @deprecated Use `url` instead.
    */
   src: Scalars['URL'];
   /**
@@ -3859,7 +3859,7 @@ export type MailingAddress = Node & {
    *
    * For example, US.
    *
-   * @deprecated Use `countryCodeV2` instead
+   * @deprecated Use `countryCodeV2` instead.
    */
   countryCode?: Maybe<Scalars['String']>;
   /**
@@ -4739,7 +4739,7 @@ export type Order = HasMetafields & Node & {
   statusUrl: Scalars['URL'];
   /**
    * Price of the order before shipping and taxes.
-   * @deprecated Use `subtotalPriceV2` instead
+   * @deprecated Use `subtotalPriceV2` instead.
    */
   subtotalPrice?: Maybe<Scalars['Money']>;
   /** Price of the order before duties, shipping and taxes. */
@@ -4748,28 +4748,28 @@ export type Order = HasMetafields & Node & {
   successfulFulfillments?: Maybe<Array<Fulfillment>>;
   /**
    * The sum of all the prices of all the items in the order, taxes and discounts included (must be positive).
-   * @deprecated Use `totalPriceV2` instead
+   * @deprecated Use `totalPriceV2` instead.
    */
   totalPrice: Scalars['Money'];
   /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
   totalPriceV2: MoneyV2;
   /**
    * The total amount that has been refunded.
-   * @deprecated Use `totalRefundedV2` instead
+   * @deprecated Use `totalRefundedV2` instead.
    */
   totalRefunded: Scalars['Money'];
   /** The total amount that has been refunded. */
   totalRefundedV2: MoneyV2;
   /**
    * The total cost of shipping.
-   * @deprecated Use `totalShippingPriceV2` instead
+   * @deprecated Use `totalShippingPriceV2` instead.
    */
   totalShippingPrice: Scalars['Money'];
   /** The total cost of shipping. */
   totalShippingPriceV2: MoneyV2;
   /**
    * The total cost of taxes.
-   * @deprecated Use `totalTaxV2` instead
+   * @deprecated Use `totalTaxV2` instead.
    */
   totalTax?: Maybe<Scalars['Money']>;
   /** The total cost of taxes. */
@@ -5065,7 +5065,7 @@ export type Payment = Node & {
   __typename?: 'Payment';
   /**
    * The amount of the payment.
-   * @deprecated Use `amountV2` instead
+   * @deprecated Use `amountV2` instead.
    */
   amount: Scalars['Money'];
   /** The amount of the payment. */
@@ -5513,7 +5513,7 @@ export type ProductVariant = HasMetafields & Node & {
   barcode?: Maybe<Scalars['String']>;
   /**
    * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`.
-   * @deprecated Use `compareAtPriceV2` instead
+   * @deprecated Use `compareAtPriceV2` instead.
    */
   compareAtPrice?: Maybe<Scalars['Money']>;
   /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`. */
@@ -5536,7 +5536,7 @@ export type ProductVariant = HasMetafields & Node & {
   metafields: Array<Maybe<Metafield>>;
   /**
    * The product variant’s price.
-   * @deprecated Use `priceV2` instead
+   * @deprecated Use `priceV2` instead.
    */
   price: Scalars['Money'];
   /** The product variant’s price. */
@@ -5653,7 +5653,7 @@ export type QueryRoot = {
   blog?: Maybe<Blog>;
   /**
    * Find a blog by its handle.
-   * @deprecated Use `blog` instead
+   * @deprecated Use `blog` instead.
    */
   blogByHandle?: Maybe<Blog>;
   /** List of the shop's blogs. */
@@ -5664,7 +5664,7 @@ export type QueryRoot = {
   collection?: Maybe<Collection>;
   /**
    * Find a collection by its handle.
-   * @deprecated Use `collection` instead
+   * @deprecated Use `collection` instead.
    */
   collectionByHandle?: Maybe<Collection>;
   /** List of the shop’s collections. */
@@ -5690,7 +5690,7 @@ export type QueryRoot = {
   page?: Maybe<Page>;
   /**
    * Find a page by its handle.
-   * @deprecated Use `page` instead
+   * @deprecated Use `page` instead.
    */
   pageByHandle?: Maybe<Page>;
   /** List of the shop's pages. */
@@ -5699,7 +5699,7 @@ export type QueryRoot = {
   product?: Maybe<Product>;
   /**
    * Find a product by its handle.
-   * @deprecated Use `product` instead
+   * @deprecated Use `product` instead.
    */
   productByHandle?: Maybe<Product>;
   /**
@@ -6193,7 +6193,7 @@ export type ShippingRate = {
   handle: Scalars['String'];
   /**
    * Price of this shipping rate.
-   * @deprecated Use `priceV2` instead
+   * @deprecated Use `priceV2` instead.
    */
   price: Scalars['Money'];
   /** Price of this shipping rate. */
@@ -6378,7 +6378,7 @@ export type Transaction = {
   __typename?: 'Transaction';
   /**
    * The amount of money that the transaction was for.
-   * @deprecated Use `amountV2` instead
+   * @deprecated Use `amountV2` instead.
    */
   amount: Scalars['Money'];
   /** The amount of money that the transaction was for. */
@@ -6387,7 +6387,7 @@ export type Transaction = {
   kind: TransactionKind;
   /**
    * The status of the transaction.
-   * @deprecated Use `statusV2` instead
+   * @deprecated Use `statusV2` instead.
    */
   status: TransactionStatus;
   /** The status of the transaction. */
@@ -6613,7 +6613,7 @@ export type AddCartItemMutationVariables = Exact<{
 }>;
 
 
-export type AddCartItemMutation = { __typename?: 'Mutation', checkoutLineItemsAdd?: { __typename?: 'CheckoutLineItemsAddPayload', checkout?: { __typename?: 'Checkout', id: string } | null } | null };
+export type AddCartItemMutation = { __typename?: 'Mutation', checkoutLineItemsAdd?: { __typename?: 'CheckoutLineItemsAddPayload', checkout?: { __typename?: 'Checkout', webUrl: any, id: string } | null } | null };
 
 export type UpdateCartItemMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
@@ -6926,6 +6926,7 @@ export const AddCartItemDocument = `
     mutation addCartItem($checkoutId: ID!, $lineItem: CheckoutLineItemInput!) {
   checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: [$lineItem]) {
     checkout {
+      webUrl
       id
     }
   }

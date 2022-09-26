@@ -37,21 +37,22 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
   const queryClient = useQueryClient();
 
   // Create Cart
-  const { mutateAsync: mutateCreateCartAsync } = useCreateCartMutation<
-    CreateCartMutation,
-    Error
-  >(shopifyGraphqlRequestClient, {
-    onSuccess: (
-      data: AddCartItemMutation,
-      _variables: CreateCartMutationVariables,
-      _context: unknown
-    ) => {
-      queryClient.invalidateQueries(useCreateCartMutation.getKey());
-    },
-    onError: () => {
-      console.log(error);
-    },
-  });
+  const { mutateAsync: mutateCreateCartAsync, isLoading: createCartLoading } =
+    useCreateCartMutation<CreateCartMutation, Error>(
+      shopifyGraphqlRequestClient,
+      {
+        onSuccess: (
+          data: AddCartItemMutation,
+          _variables: CreateCartMutationVariables,
+          _context: unknown
+        ) => {
+          queryClient.invalidateQueries(useCreateCartMutation.getKey());
+        },
+        onError: () => {
+          console.log(error);
+        },
+      }
+    );
 
   const CHECKOUT_ID = "CHECKOUT_ID";
 
@@ -69,7 +70,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
         _context: unknown
       ) => {
         queryClient.invalidateQueries(useAddCartItemMutation.getKey());
-        // console.log("mutation data", data);
+        console.log("mutation data", data.checkoutLineItemsAdd.checkout.webUrl);
         // setResponse(data);
       },
       onError: () => {
@@ -92,6 +93,20 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
       nookies.set(context, CHECKOUT_ID, checkoutCreate?.checkout?.id!, {
         maxAge: 30 * 24 * 60 * 60,
       });
+      console.log("error");
+    }
+  };
+
+  const buyNow = async (lineItem: CheckoutLineItemInput) => {
+    try {
+      const { checkoutCreate } = await mutateCreateCartAsync({
+        input: { lineItems: [lineItem] },
+      });
+
+      // console.log("weburl", checkoutCreate.checkout.webUrl);
+
+      window.open(checkoutCreate.checkout.webUrl, "_blank").focus();
+    } catch (error) {
       console.log("error");
     }
   };
@@ -124,12 +139,27 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
           }}
           loading={isLoading}
           disabled={product?.availableForSale === false}
-          className="py-3 md:max-w-xs"
+          className="py-3 md:max-w-xs hover:bg-accent-2"
         >
           {product?.availableForSale === false
             ? "Not Available"
             : "Add To Cart"}
         </Button>
+
+        {product?.availableForSale && (
+          <Button
+            onClick={async () => {
+              await buyNow({
+                quantity: 1,
+                variantId: product?.variants?.nodes[0]?.id,
+              });
+            }}
+            loading={createCartLoading}
+            className="py-3 mt-3 bg-black text-white md:max-w-xs hover:bg-accent-7"
+          >
+            Buy Now
+          </Button>
+        )}
         <div
           className="mt-3"
           dangerouslySetInnerHTML={{ __html: product?.descriptionHtml }}

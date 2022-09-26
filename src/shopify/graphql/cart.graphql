@@ -76,6 +76,7 @@ mutation createCart($input: CheckoutCreateInput!) {
 mutation addCartItem($checkoutId: ID!, $lineItem: CheckoutLineItemInput!) {
   checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: [$lineItem]) {
     checkout {
+      webUrl
       id
     }
   }

@@ -59,11 +59,17 @@ const CartPage = (context?: NextPageContext) => {
     //@ts-ignore
   }, [data?.node?.completedAt, context]);
 
-  if (isLoading) return <Loader />;
-
   if (!checkoutId) {
     return emptyMessage;
   }
+
+  if (isLoading)
+    return (
+      <>
+        <NextSeo title="Cart" />
+        <Loader />
+      </>
+    );
 
   if (error)
     return (
