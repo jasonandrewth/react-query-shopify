@@ -37,22 +37,25 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
   const queryClient = useQueryClient();
 
   // Create Cart
-  const { mutateAsync: mutateCreateCartAsync, isLoading: createCartLoading } =
-    useCreateCartMutation<CreateCartMutation, Error>(
-      shopifyGraphqlRequestClient,
-      {
-        onSuccess: (
-          data: AddCartItemMutation,
-          _variables: CreateCartMutationVariables,
-          _context: unknown
-        ) => {
-          queryClient.invalidateQueries(useCreateCartMutation.getKey());
-        },
-        onError: () => {
-          console.log(error);
-        },
-      }
-    );
+  const {
+    mutateAsync: mutateCreateCartAsync,
+    isLoading: createCartLoading,
+    isError: cartError,
+  } = useCreateCartMutation<CreateCartMutation, Error>(
+    shopifyGraphqlRequestClient,
+    {
+      onSuccess: (
+        data: AddCartItemMutation,
+        _variables: CreateCartMutationVariables,
+        _context: unknown
+      ) => {
+        queryClient.invalidateQueries(useCreateCartMutation.getKey());
+      },
+      onError: () => {
+        console.log(error);
+      },
+    }
+  );
 
   const CHECKOUT_ID = "CHECKOUT_ID";
 
@@ -60,6 +63,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
     mutate,
     isLoading,
     error,
+    isError,
     mutateAsync: mutateCartItemAsync,
   } = useAddCartItemMutation<AddCartItemMutation, Error>(
     shopifyGraphqlRequestClient,
@@ -160,6 +164,11 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
             Buy Now
           </Button>
         )}
+
+        {isError && (
+          <span className="text-pink pt-3">Error adding item to cart</span>
+        )}
+
         <div
           className="mt-3"
           dangerouslySetInnerHTML={{ __html: product?.descriptionHtml }}

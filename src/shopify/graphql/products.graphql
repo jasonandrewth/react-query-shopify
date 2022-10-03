@@ -158,14 +158,7 @@ query GetProductBySlug($slug: String!) {
       }
 
       nodes {
-        url(
-          transform: {
-            preferredContentType: JPG
-            crop: CENTER
-            maxWidth: 768
-            maxHeight: 1024
-          }
-        )
+        url(transform: { preferredContentType: JPG })
         altText
         width
         height

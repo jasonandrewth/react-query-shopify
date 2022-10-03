@@ -382,7 +382,13 @@ export enum CardBrand {
   Visa = 'VISA'
 }
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type Cart = Node & {
   __typename?: 'Cart';
   /** An attribute associated with the cart. */
@@ -393,7 +399,7 @@ export type Cart = Node & {
   buyerIdentity: CartBuyerIdentity;
   /** The URL of the checkout for the cart. */
   checkoutUrl: Scalars['URL'];
-  /** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart). */
+  /** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
   cost: CartCost;
   /** The date and time when the cart was created. */
   createdAt: Scalars['DateTime'];
@@ -407,7 +413,11 @@ export type Cart = Node & {
    */
   discountCodes: Array<CartDiscountCode>;
   /**
-   * The estimated costs that the buyer will pay at checkout. The estimated costs are subject to change and changes will be reflected at checkout. The `estimatedCost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
+   * The estimated costs that the buyer will pay at checkout.
+   * The estimated costs are subject to change and changes will be reflected at checkout.
+   * The `estimatedCost` field uses the `buyerIdentity` field to determine
+   * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+   *
    * @deprecated Use `cost` instead.
    */
   estimatedCost: CartEstimatedCost;
@@ -424,13 +434,25 @@ export type Cart = Node & {
 };
 
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type CartAttributeArgs = {
   key: Scalars['String'];
 };
 
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type CartDeliveryGroupsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -440,7 +462,13 @@ export type CartDeliveryGroupsArgs = {
 };
 
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type CartLinesArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -483,7 +511,7 @@ export type CartBuyerIdentity = {
 /**
  * Specifies the input fields to update the buyer information associated with a cart.
  * Buyer identity is used to determine
- * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-checkout)
+ * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
  * and should match the customer's shipping address.
  *
  */
@@ -518,8 +546,8 @@ export type CartCodeDiscountAllocation = CartDiscountAllocation & {
 
 /**
  * The costs that the buyer will pay at checkout.
- * It uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
- * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
+ * The cart cost uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
+ * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
  *
  */
 export type CartCost = {
@@ -666,8 +694,10 @@ export enum CartErrorCode {
 
 /**
  * The estimated costs that the buyer will pay at checkout.
- * It uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
- * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
+ * The estimated cost uses
+ * [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity)
+ * to determine
+ * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
  *
  */
 export type CartEstimatedCost = {
@@ -688,7 +718,12 @@ export type CartEstimatedCost = {
 export type CartInput = {
   /** An array of key-value pairs that contains additional information about the cart. */
   attributes?: InputMaybe<Array<AttributeInput>>;
-  /** The customer associated with the cart. Used to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-checkout). Buyer identity should match the customer's shipping address. */
+  /**
+   * The customer associated with the cart. Used to determine [international pricing]
+   * (https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+   * Buyer identity should match the customer's shipping address.
+   *
+   */
   buyerIdentity?: InputMaybe<CartBuyerIdentityInput>;
   /**
    * The case-insensitive discount codes that the customer added at checkout.
@@ -3144,7 +3179,7 @@ export type Filter = {
  * The type of data that the filter group represents.
  *
  * For more information, refer to [Filter products in a collection with the Storefront API]
- * (https://shopify.dev/api/examples/filter-products).
+ * (https://shopify.dev/custom-storefronts/products-collections/filter-products).
  *
  */
 export enum FilterType {
@@ -4259,7 +4294,7 @@ export type Mutation = {
   /**
    * Updates customer information associated with a cart.
    * Buyer identity is used to determine
-   * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-checkout)
+   * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
    * and should match the customer's shipping address.
    *
    */
@@ -4351,7 +4386,20 @@ export type Mutation = {
   /** Updates the default address of an existing customer. */
   customerDefaultAddressUpdate?: Maybe<CustomerDefaultAddressUpdatePayload>;
   /**
-   * "Sends a reset password email to the customer. The reset password email contains a reset password URL and token that you can pass to the [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the customer password."
+   * Sends a reset password email to the customer. The reset password
+   * email contains a reset password URL and token that you can pass to
+   * the [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or
+   * [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the
+   * customer password.
+   *
+   * This mutation is throttled by IP. With authenticated access,
+   * a value provided to
+   * you can provide a [`Shopify-Storefront-Buyer-IP`](https://shopify.dev/api/usage/authentication#optional-ip-header) instead of the request IP.
+   * instead of the request IP.
+   *
+   * Ensure that the value provided to
+   * `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this
+   * mutation presents a security risk.
    *
    */
   customerRecover?: Maybe<CustomerRecoverPayload>;
@@ -5658,7 +5706,11 @@ export type QueryRoot = {
   blogByHandle?: Maybe<Blog>;
   /** List of the shop's blogs. */
   blogs: BlogConnection;
-  /** Retrieve a cart by its ID. For more information, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+  /**
+   * Retrieve a cart by its ID. For more information, refer to
+   * [Manage a cart with the Storefront API](https://shopify.dev/custom-storefronts/cart/manage).
+   *
+   */
   cart?: Maybe<Cart>;
   /** Fetch a specific `Collection` by one of its unique attributes. */
   collection?: Maybe<Collection>;
@@ -7108,9 +7160,7 @@ export const GetProductBySlugDocument = `
         hasPreviousPage
       }
       nodes {
-        url(
-          transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
-        )
+        url(transform: {preferredContentType: JPG})
         altText
         width
         height

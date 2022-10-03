@@ -39,7 +39,6 @@ const ProductView: React.FC<IProps> = ({ images }) => {
                 alt={image.altText}
                 width={image.width}
                 height={image.height}
-                layout="responsive"
                 priority
                 // blurDataURL={image.url} //automatically provided
                 // placeholder="blur" // Optional blur-up while loading

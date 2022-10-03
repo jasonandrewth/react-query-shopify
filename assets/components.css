@@ -3,6 +3,10 @@
 }
 
 /* scroll */
+.swiper-wrapper {
+  align-items: center;
+}
+
 .swiper-pagination-bullet {
   width: 400px !important;
   height: 20px;
