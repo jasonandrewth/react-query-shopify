@@ -38,7 +38,7 @@ const SubscribePage = ({ data }) => {
             <a target="_blank">
               <article
                 key={idx}
-                className="shadow-xl rounded-lg border border-black overflow-hidden"
+                className="shadow-xl rounded-md border border-black overflow-hidden"
               >
                 <Image
                   src={tier.attributes.image_url}

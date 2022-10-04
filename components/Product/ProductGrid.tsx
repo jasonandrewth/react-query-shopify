@@ -77,7 +77,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                 return (
                   <article
                     key={`product-${product?.id}-${idx}`}
-                    className="shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-lg border border-black overflow-hidden transition-all duration-200 ease-in-out"
+                    className="shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-md border border-black overflow-hidden transition-all duration-200 ease-in-out"
                   >
                     <Link href={`/products/${product.handle}`}>
                       <a>
