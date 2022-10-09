@@ -51,7 +51,7 @@ const submitter = async (req, res) => {
       "https://ditto-press.myshopify.com/admin/api/2022-07/graphql.json",
       {
         headers: {
-          "X-Shopify-Access-Token": "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",
+          "X-Shopify-Access-Token": ACCESS_TOKEN,
           "Content-Type": "application/json",
         },
       }
@@ -64,7 +64,7 @@ const submitter = async (req, res) => {
     if (response.status >= 400) {
       return res.status(400).json({
         error: `There was an error subscribing to the newsletter. 
-        Hit me up peter@peterlunch.com and I'll add you the old fashioned way :(.`,
+        Hit me up and I'll add you the old fashioned way :(.`,
       });
     }
 

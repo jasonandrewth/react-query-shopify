@@ -104,14 +104,15 @@ const Navigation: React.FC<IProps> = () => {
         </div>
         {/* <CartIndicator /> */}
       </div>
+
       <Newsletter />
 
       <div
         className={clsx(
           displayMenu
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0",
-          "flex z-10 overflow-x-scroll justify-between bg-white py-4 px-4 md:px-6 xl:px-8 lg:hidden border-b border-black transition-all duration-300 ease-in-out"
+            ? "translate-y-full opacity-100"
+            : "-translate-y-full opacity-100",
+          "flex drop-shadow-sm overflow-x-scroll justify-between bg-white py-4 px-4 md:px-6 xl:px-8 lg:hidden border-b border-black transition-all duration-300 ease-in-out"
         )}
       >
         <Link href={`/products`}>
