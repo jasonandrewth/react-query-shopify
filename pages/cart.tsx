@@ -94,7 +94,9 @@ const CartPage = (context?: NextPageContext) => {
             <>
               <NextSeo title="Cart" />
               <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
-                My Cart
+                <h1 className="text-center uppercase font-bold text-2xl">
+                  My Cart
+                </h1>
                 {/* <Text variant="pageHeading">My Cart</Text>
           <Text variant="sectionHeading">Review your Order</Text> */}
                 <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accent-2 border-b border-accent-2">
