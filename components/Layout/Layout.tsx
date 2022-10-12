@@ -20,7 +20,7 @@ const Layout: React.FC<IProps> = ({ main }) => {
 
   // useEffect(() => {
   //   console.log("rerender");
-  // }, []);
+  // }, []);`
 
   return (
     <>

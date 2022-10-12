@@ -10,7 +10,6 @@ import type {
 
 import nookies, { destroyCookie } from "nookies";
 
-import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 
 import { getLayout } from "components/Layout/Layout";
@@ -51,10 +50,11 @@ const CartPage = (context?: NextPageContext) => {
   );
 
   useEffect(() => {
-    //@ts-ignore
-    if (data?.node?.completedAt) {
-      console.log("destroy");
-      destroyCookie(context, CHECKOUT_ID);
+    if (data?.node?.__typename === "Checkout") {
+      if (data?.node?.completedAt) {
+        console.log("destroy");
+        destroyCookie(context, CHECKOUT_ID);
+      }
     }
     //@ts-ignore
   }, [data?.node?.completedAt, context]);
@@ -85,59 +85,61 @@ const CartPage = (context?: NextPageContext) => {
     );
 
   if (data) {
-    // @ts-ignore
-    if (data?.node?.lineItems?.nodes.length <= 0) {
-      return emptyMessage;
-    } else {
-      if (isSuccess) {
-        return (
-          <>
-            <NextSeo title="Cart" />
-            <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
-              My Cart
-              {/* <Text variant="pageHeading">My Cart</Text>
-        <Text variant="sectionHeading">Review your Order</Text> */}
-              <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accent-2 border-b border-accent-2">
+    if (data?.node?.__typename === "Checkout") {
+      if (data?.node?.lineItems?.nodes.length <= 0) {
+        return emptyMessage;
+      } else {
+        if (isSuccess) {
+          return (
+            <>
+              <NextSeo title="Cart" />
+              <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
+                My Cart
+                {/* <Text variant="pageHeading">My Cart</Text>
+          <Text variant="sectionHeading">Review your Order</Text> */}
+                <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accent-2 border-b border-accent-2">
+                  {
+                    // @ts-ignore
+                    data.node.lineItems.nodes.map((item: CheckoutLineItem) => (
+                      <CartItem
+                        key={item.id}
+                        item={item}
+                        checkoutId={checkoutId}
+                      />
+                    ))
+                  }
+                </ul>
                 {
-                  // @ts-ignore
-                  data.node.lineItems.nodes.map((item: CheckoutLineItem) => (
-                    <CartItem
-                      key={item.id}
-                      item={item}
-                      checkoutId={checkoutId}
-                    />
-                  ))
+                  //@ts-ignore
+                  data?.node?.lineItems?.nodes.length <= 0 ? (
+                    <Button
+                      href="/"
+                      Component="a"
+                      className="py-3 w-full md:w-auto"
+                    >
+                      Continue Shopping
+                    </Button>
+                  ) : (
+                    <Button
+                      href={
+                        //@ts-ignore
+                        data?.node?.webUrl
+                      }
+                      Component="a"
+                      openSeperate
+                      className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
+                    >
+                      Proceed to Checkout
+                    </Button>
+                  )
                 }
-              </ul>
-              {
-                //@ts-ignore
-                data?.node?.lineItems?.nodes.length <= 0 ? (
-                  <Button
-                    href="/"
-                    Component="a"
-                    className="py-3 w-full md:w-auto"
-                  >
-                    Continue Shopping
-                  </Button>
-                ) : (
-                  <Button
-                    href={
-                      //@ts-ignore
-                      data?.node?.webUrl
-                    }
-                    Component="a"
-                    openSeperate
-                    className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
-                  >
-                    Proceed to Checkout
-                  </Button>
-                )
-              }
-            </div>
-          </>
-        );
+              </div>
+            </>
+          );
+        }
       }
     }
+    return null;
   }
 };
 

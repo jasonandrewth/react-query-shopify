@@ -1,17 +1,24 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
+import nookies from "nookies";
 
 import clsx from "clsx";
 import useMedia from "use-media";
 
 import { useUI } from "components/UI/context";
 
+//Data Fetching
+import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
+
+import {
+  useGetCartItemCountQuery,
+  GetCartItemCountQuery,
+} from "src/generated/graphql";
+
 //Components
 import NavButton from "./components/NavButton";
 import Newsletter from "./components/Newsletter/Newsletter";
-import CartIndicator from "./components/CartIndicator";
 
 import Logo from "components/Icons/Logo";
 import Bag from "components/Icons/Bag";
@@ -29,6 +36,20 @@ const links = [
 
 const Navigation: React.FC<IProps> = () => {
   const isDesktop = useMedia({ minWidth: "1024px" });
+
+  const CHECKOUT_ID = "CHECKOUT_ID";
+  const checkoutId = nookies.get(null, CHECKOUT_ID).CHECKOUT_ID;
+
+  const { data, isLoading, error, isSuccess } = useGetCartItemCountQuery<
+    GetCartItemCountQuery,
+    Error
+  >(shopifyGraphqlRequestClient, {
+    checkoutId: checkoutId,
+  });
+
+  if (data?.node?.__typename === "Checkout") {
+    console.log("data", data?.node?.lineItems?.edges?.length);
+  }
 
   //Router
   const router = useRouter();
@@ -95,14 +116,17 @@ const Navigation: React.FC<IProps> = () => {
           </Link>
         </div>
 
-        <div className="font-bold uppercase text-xl cursor-pointer">
+        <div className="relative font-bold uppercase text-xl cursor-pointer">
           <Link href={`/cart`}>
             <a>
               <Bag width={22} height={22} />
+              {data?.node?.__typename === "Checkout" &&
+                data?.node?.lineItems?.edges?.length > 0 && (
+                  <div className="rounded-full bg-pink w-3 h-3 absolute -top-1/2 -right-1/2 translate-y-1/2 -translate-x-1/2" />
+                )}
             </a>
           </Link>
         </div>
-        {/* <CartIndicator /> */}
       </div>
 
       <Newsletter />

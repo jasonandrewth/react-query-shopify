@@ -12,6 +12,8 @@ import {
   CreateCartMutation,
   CreateCartMutationVariables,
   Product,
+  useGetCartItemCountQuery,
+  useGetCartQuery,
 } from "src/generated/graphql";
 
 import nookies from "nookies";
@@ -73,8 +75,11 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
         _variables: AddCartItemMutationVariables,
         _context: unknown
       ) => {
+        const checkoutId = nookies.get(context, CHECKOUT_ID).CHECKOUT_ID;
         queryClient.invalidateQueries(useAddCartItemMutation.getKey());
-        console.log("mutation data", data.checkoutLineItemsAdd.checkout.webUrl);
+        queryClient.invalidateQueries(
+          useGetCartItemCountQuery.getKey({ checkoutId: checkoutId })
+        );
         // setResponse(data);
       },
       onError: () => {
@@ -109,7 +114,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
 
       // console.log("weburl", checkoutCreate.checkout.webUrl);
 
-      window.open(checkoutCreate.checkout.webUrl, "_blank").focus();
+      window.open(checkoutCreate.checkout.webUrl, "_self").focus();
     } catch (error) {
       console.log("error");
     }

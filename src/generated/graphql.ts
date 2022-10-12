@@ -4393,12 +4393,9 @@ export type Mutation = {
    * customer password.
    *
    * This mutation is throttled by IP. With authenticated access,
-   * a value provided to
    * you can provide a [`Shopify-Storefront-Buyer-IP`](https://shopify.dev/api/usage/authentication#optional-ip-header) instead of the request IP.
-   * instead of the request IP.
    *
-   * Ensure that the value provided to
-   * `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this
+   * Make sure that the value provided to `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this
    * mutation presents a security risk.
    *
    */
@@ -6643,7 +6640,7 @@ export type GetCartQueryVariables = Exact<{
 }>;
 
 
-export type GetCartQuery = { __typename?: 'QueryRoot', node?: { __typename?: 'AppliedGiftCard' } | { __typename?: 'Article' } | { __typename?: 'Blog' } | { __typename?: 'Cart' } | { __typename?: 'CartLine' } | { __typename?: 'Checkout', webUrl: any, id: string, completedAt?: any | null, subtotalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalTaxV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, lineItems: { __typename?: 'CheckoutLineItemConnection', nodes: Array<{ __typename?: 'CheckoutLineItem', id: string, title: string, quantity: number, variant?: { __typename?: 'ProductVariant', id: string, title: string, product: { __typename?: 'Product', handle: string }, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', altText?: string | null, url: any } | null } | null }> } } | { __typename?: 'CheckoutLineItem' } | { __typename?: 'Collection' } | { __typename?: 'Comment' } | { __typename?: 'ExternalVideo' } | { __typename?: 'GenericFile' } | { __typename?: 'Location' } | { __typename?: 'MailingAddress' } | { __typename?: 'MediaImage' } | { __typename?: 'Menu' } | { __typename?: 'MenuItem' } | { __typename?: 'Metafield' } | { __typename?: 'Model3d' } | { __typename?: 'Order' } | { __typename?: 'Page' } | { __typename?: 'Payment' } | { __typename?: 'Product' } | { __typename?: 'ProductOption' } | { __typename?: 'ProductVariant' } | { __typename?: 'Shop' } | { __typename?: 'ShopPolicy' } | { __typename?: 'UrlRedirect' } | { __typename?: 'Video' } | null };
+export type GetCartQuery = { __typename?: 'QueryRoot', node?: { __typename?: 'AppliedGiftCard' } | { __typename?: 'Article' } | { __typename?: 'Blog' } | { __typename?: 'Cart' } | { __typename?: 'CartLine' } | { __typename: 'Checkout', webUrl: any, id: string, completedAt?: any | null, subtotalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalTaxV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalPriceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, lineItems: { __typename?: 'CheckoutLineItemConnection', nodes: Array<{ __typename?: 'CheckoutLineItem', id: string, title: string, quantity: number, variant?: { __typename?: 'ProductVariant', id: string, title: string, product: { __typename?: 'Product', handle: string }, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', altText?: string | null, url: any } | null } | null }> } } | { __typename?: 'CheckoutLineItem' } | { __typename?: 'Collection' } | { __typename?: 'Comment' } | { __typename?: 'ExternalVideo' } | { __typename?: 'GenericFile' } | { __typename?: 'Location' } | { __typename?: 'MailingAddress' } | { __typename?: 'MediaImage' } | { __typename?: 'Menu' } | { __typename?: 'MenuItem' } | { __typename?: 'Metafield' } | { __typename?: 'Model3d' } | { __typename?: 'Order' } | { __typename?: 'Page' } | { __typename?: 'Payment' } | { __typename?: 'Product' } | { __typename?: 'ProductOption' } | { __typename?: 'ProductVariant' } | { __typename?: 'Shop' } | { __typename?: 'ShopPolicy' } | { __typename?: 'UrlRedirect' } | { __typename?: 'Video' } | null };
 
 export type GetCartItemCountQueryVariables = Exact<{
   checkoutId: Scalars['ID'];
@@ -6811,6 +6808,7 @@ export const GetCartDocument = `
     query getCart($checkoutId: ID!) {
   node(id: $checkoutId) {
     ... on Checkout {
+      __typename
       webUrl
       id
       completedAt

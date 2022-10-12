@@ -1,6 +1,7 @@
 query getCart($checkoutId: ID!) {
   node(id: $checkoutId) {
     ... on Checkout {
+      __typename
       webUrl
       id
       completedAt
