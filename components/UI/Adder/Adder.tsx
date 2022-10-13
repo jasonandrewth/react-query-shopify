@@ -9,7 +9,7 @@ interface IProps {
 }
 const Adder: React.FC<IProps> = ({ amount, add, subtract, max = 6 }) => {
   return (
-    <div className="flex flex-row max-w-fit h-9 border border-black mb-3">
+    <div className="rounded-md overflow-hidden flex flex-row max-w-fit h-9 border border-black mb-3">
       <button
         type="button"
         onClick={subtract}

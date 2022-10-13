@@ -117,7 +117,7 @@ const CartPage = (context?: NextPageContext) => {
                     <Button
                       href="/"
                       Component="a"
-                      className="py-3 w-full md:w-auto"
+                      className="rounded-md py-3 w-full md:w-auto"
                     >
                       Continue Shopping
                     </Button>
@@ -129,7 +129,7 @@ const CartPage = (context?: NextPageContext) => {
                       }
                       Component="a"
                       openSeperate
-                      className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
+                      className="rounded-md py-3 md:px-2 md:mt-4 w-full md:w-auto"
                     >
                       Proceed to Checkout
                     </Button>

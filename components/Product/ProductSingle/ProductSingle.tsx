@@ -148,7 +148,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
           }}
           loading={isLoading}
           disabled={product?.availableForSale === false}
-          className="py-3 md:max-w-xs hover:bg-accent-2"
+          className="rounded-md py-3 md:max-w-xs hover:bg-accent-2"
         >
           {product?.availableForSale === false
             ? "Not Available"
@@ -164,7 +164,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
               });
             }}
             loading={createCartLoading}
-            className="py-3 mt-3 bg-black text-white md:max-w-xs hover:bg-accent-7"
+            className="rounded-md py-3 mt-3 bg-black text-white md:max-w-xs hover:bg-accent-7"
           >
             Buy Now
           </Button>
