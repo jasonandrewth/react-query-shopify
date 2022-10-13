@@ -69,7 +69,7 @@ const Newsletter = () => {
           required
           autoCapitalize="off"
           autoCorrect="off"
-          className="border border-black text-sm rounded-xl px-2 py-1 shadow-xl md:shadow-none md:hover:shadow-xl mr-4"
+          className="border border-black text-sm rounded-md px-2 py-1 shadow-xl md:shadow-none md:hover:shadow-xl mr-4"
         />
 
         <Button
@@ -78,7 +78,7 @@ const Newsletter = () => {
           value=""
           name="subscribe"
           loading={isLoading}
-          className="border uppercase text-sm border-black rounded-xl px-2 py-1 shadow-xl md:shadow-none md:hover:shadow-xl transition-all duration-150 ease-in-out hover:bg-lime"
+          className="border uppercase text-sm border-black rounded-md px-2 py-1 shadow-xl md:shadow-none md:hover:shadow-xl transition-all duration-150 ease-in-out hover:bg-lime"
         >
           {isLoading ? "signing up" : "sign up"}
         </Button>
