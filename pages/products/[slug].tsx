@@ -25,9 +25,7 @@ import Adder from "components/UI/Adder";
 import {
   GetProductBySlugQuery,
   useGetProductBySlugQuery,
-  useGetAllCollectionsQuery,
   Product,
-  useGetNavItemsQuery,
   useGetShopInfoQuery,
 } from "src/generated/graphql";
 
@@ -114,15 +112,10 @@ export const getStaticProps = async ({
     useGetShopInfoQuery.fetcher(shopifyGraphqlRequestClient)
   );
 
-  await queryClient.prefetchQuery(
-    useGetAllCollectionsQuery.getKey(),
-    useGetAllCollectionsQuery.fetcher(shopifyGraphqlRequestClient)
-  );
-
-  await queryClient.prefetchQuery(
-    useGetNavItemsQuery.getKey(),
-    useGetNavItemsQuery.fetcher(shopifyGraphqlRequestClient)
-  );
+  // await queryClient.prefetchQuery(
+  //   useGetNavItemsQuery.getKey(),
+  //   useGetNavItemsQuery.fetcher(shopifyGraphqlRequestClient)
+  // );
 
   return {
     props: {

@@ -11,12 +11,10 @@ import Loader from "components/UI/Loader";
 
 import {
   Product,
-  useGetNavItemsQuery,
   GetAllProductsQuery,
   useGetAllProductsQuery,
   useInfiniteGetAllProductsQuery,
   useGetShopInfoQuery,
-  useGetAllCollectionsQuery,
 } from "src/generated/graphql";
 
 export default function ProductsPage() {

@@ -61,9 +61,9 @@ fragment PaginatedProductList on ProductConnection {
         url(
           transform: {
             preferredContentType: JPG
-            crop: CENTER
-            maxWidth: 768
-            maxHeight: 1024
+            # crop: CENTER
+            # maxWidth: 768
+            # maxHeight: 1024
           }
         )
         altText
@@ -75,10 +75,10 @@ fragment PaginatedProductList on ProductConnection {
     featuredImage {
       url(
         transform: {
-          preferredContentType: JPG
-          crop: CENTER
-          maxWidth: 768
-          maxHeight: 1024
+          # preferredContentType: JPG
+          # crop: CENTER
+          # maxWidth: 768
+          # maxHeight: 1024
         }
       )
       height
@@ -164,71 +164,6 @@ query GetProductBySlug($slug: String!) {
         height
         id
       }
-    }
-  }
-}
-
-# COLLECTIONS
-
-query GetNavItems {
-  menu(handle: "main-menu") {
-    items {
-      id
-      resourceId
-      title
-    }
-  }
-}
-
-query GetAllCollections {
-  collections(first: 50) {
-    nodes {
-      id
-      handle
-      title
-      description
-      image {
-        id
-        url(
-          transform: {
-            preferredContentType: JPG
-            crop: CENTER
-            maxWidth: 768
-            maxHeight: 1024
-          }
-        )
-        altText
-      }
-      products(first: 1) {
-        nodes {
-          id
-          featuredImage {
-            url(
-              transform: {
-                preferredContentType: JPG
-                crop: CENTER
-                maxWidth: 768
-                maxHeight: 1024
-              }
-            )
-          }
-        }
-      }
-    }
-    pageInfo {
-      hasNextPage
-    }
-  }
-}
-
-query GetCollectionByHandle($handle: String!, $productsAfter: String) {
-  collectionByHandle(handle: $handle) {
-    id
-    handle
-    title
-    description
-    products(first: 20, after: $productsAfter) {
-      ...PaginatedProductList
     }
   }
 }

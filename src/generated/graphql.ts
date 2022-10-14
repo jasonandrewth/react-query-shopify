@@ -6696,24 +6696,6 @@ export type GetProductBySlugQueryVariables = Exact<{
 
 export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null, id?: string | null }> } } | null };
 
-export type GetNavItemsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetNavItemsQuery = { __typename?: 'QueryRoot', menu?: { __typename?: 'Menu', items: Array<{ __typename?: 'MenuItem', id: string, resourceId?: string | null, title: string }> } | null };
-
-export type GetAllCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllCollectionsQuery = { __typename?: 'QueryRoot', collections: { __typename?: 'CollectionConnection', nodes: Array<{ __typename?: 'Collection', id: string, handle: string, title: string, description: string, image?: { __typename?: 'Image', id?: string | null, url: any, altText?: string | null } | null, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, featuredImage?: { __typename?: 'Image', url: any } | null }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } };
-
-export type GetCollectionByHandleQueryVariables = Exact<{
-  handle: Scalars['String'];
-  productsAfter?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type GetCollectionByHandleQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', id: string, handle: string, title: string, description: string, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, availableForSale: boolean, title: string, productType: string, vendor: string, description: string, descriptionHtml: any, totalInventory?: number | null, options: Array<{ __typename?: 'ProductOption', id: string, name: string, values: Array<string> }>, priceRange: { __typename?: 'ProductPriceRange', maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, variants: { __typename?: 'ProductVariantConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'ProductVariant', id: string, title: string, sku?: string | null, availableForSale: boolean, requiresShipping: boolean, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null }> }, images: { __typename?: 'ImageConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null, width?: number | null, height?: number | null, id?: string | null }> }, featuredImage?: { __typename: 'Image', url: any, height?: number | null, width?: number | null, altText?: string | null } | null }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } } } | null };
-
 export type GetShopInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6778,9 +6760,7 @@ export const PaginatedProductListFragmentDoc = `
         hasPreviousPage
       }
       nodes {
-        url(
-          transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
-        )
+        url(transform: {preferredContentType: JPG})
         altText
         width
         height
@@ -6788,9 +6768,7 @@ export const PaginatedProductListFragmentDoc = `
       }
     }
     featuredImage {
-      url(
-        transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
-      )
+      url(transform: {})
       height
       width
       altText
@@ -7207,179 +7185,6 @@ useInfiniteGetProductBySlugQuery.getKey = (variables: GetProductBySlugQueryVaria
 ;
 
 useGetProductBySlugQuery.fetcher = (client: GraphQLClient, variables: GetProductBySlugQueryVariables, headers?: RequestInit['headers']) => fetcher<GetProductBySlugQuery, GetProductBySlugQueryVariables>(client, GetProductBySlugDocument, variables, headers);
-export const GetNavItemsDocument = `
-    query GetNavItems {
-  menu(handle: "main-menu") {
-    items {
-      id
-      resourceId
-      title
-    }
-  }
-}
-    `;
-export const useGetNavItemsQuery = <
-      TData = GetNavItemsQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: GetNavItemsQueryVariables,
-      options?: UseQueryOptions<GetNavItemsQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetNavItemsQuery, TError, TData>(
-      variables === undefined ? ['GetNavItems'] : ['GetNavItems', variables],
-      fetcher<GetNavItemsQuery, GetNavItemsQueryVariables>(client, GetNavItemsDocument, variables, headers),
-      options
-    );
-
-useGetNavItemsQuery.getKey = (variables?: GetNavItemsQueryVariables) => variables === undefined ? ['GetNavItems'] : ['GetNavItems', variables];
-;
-
-export const useInfiniteGetNavItemsQuery = <
-      TData = GetNavItemsQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof GetNavItemsQueryVariables,
-      client: GraphQLClient,
-      variables?: GetNavItemsQueryVariables,
-      options?: UseInfiniteQueryOptions<GetNavItemsQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<GetNavItemsQuery, TError, TData>(
-      variables === undefined ? ['GetNavItems.infinite'] : ['GetNavItems.infinite', variables],
-      (metaData) => fetcher<GetNavItemsQuery, GetNavItemsQueryVariables>(client, GetNavItemsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
-      options
-    );
-
-
-useInfiniteGetNavItemsQuery.getKey = (variables?: GetNavItemsQueryVariables) => variables === undefined ? ['GetNavItems.infinite'] : ['GetNavItems.infinite', variables];
-;
-
-useGetNavItemsQuery.fetcher = (client: GraphQLClient, variables?: GetNavItemsQueryVariables, headers?: RequestInit['headers']) => fetcher<GetNavItemsQuery, GetNavItemsQueryVariables>(client, GetNavItemsDocument, variables, headers);
-export const GetAllCollectionsDocument = `
-    query GetAllCollections {
-  collections(first: 50) {
-    nodes {
-      id
-      handle
-      title
-      description
-      image {
-        id
-        url(
-          transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
-        )
-        altText
-      }
-      products(first: 1) {
-        nodes {
-          id
-          featuredImage {
-            url(
-              transform: {preferredContentType: JPG, crop: CENTER, maxWidth: 768, maxHeight: 1024}
-            )
-          }
-        }
-      }
-    }
-    pageInfo {
-      hasNextPage
-    }
-  }
-}
-    `;
-export const useGetAllCollectionsQuery = <
-      TData = GetAllCollectionsQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: GetAllCollectionsQueryVariables,
-      options?: UseQueryOptions<GetAllCollectionsQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetAllCollectionsQuery, TError, TData>(
-      variables === undefined ? ['GetAllCollections'] : ['GetAllCollections', variables],
-      fetcher<GetAllCollectionsQuery, GetAllCollectionsQueryVariables>(client, GetAllCollectionsDocument, variables, headers),
-      options
-    );
-
-useGetAllCollectionsQuery.getKey = (variables?: GetAllCollectionsQueryVariables) => variables === undefined ? ['GetAllCollections'] : ['GetAllCollections', variables];
-;
-
-export const useInfiniteGetAllCollectionsQuery = <
-      TData = GetAllCollectionsQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof GetAllCollectionsQueryVariables,
-      client: GraphQLClient,
-      variables?: GetAllCollectionsQueryVariables,
-      options?: UseInfiniteQueryOptions<GetAllCollectionsQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<GetAllCollectionsQuery, TError, TData>(
-      variables === undefined ? ['GetAllCollections.infinite'] : ['GetAllCollections.infinite', variables],
-      (metaData) => fetcher<GetAllCollectionsQuery, GetAllCollectionsQueryVariables>(client, GetAllCollectionsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
-      options
-    );
-
-
-useInfiniteGetAllCollectionsQuery.getKey = (variables?: GetAllCollectionsQueryVariables) => variables === undefined ? ['GetAllCollections.infinite'] : ['GetAllCollections.infinite', variables];
-;
-
-useGetAllCollectionsQuery.fetcher = (client: GraphQLClient, variables?: GetAllCollectionsQueryVariables, headers?: RequestInit['headers']) => fetcher<GetAllCollectionsQuery, GetAllCollectionsQueryVariables>(client, GetAllCollectionsDocument, variables, headers);
-export const GetCollectionByHandleDocument = `
-    query GetCollectionByHandle($handle: String!, $productsAfter: String) {
-  collectionByHandle(handle: $handle) {
-    id
-    handle
-    title
-    description
-    products(first: 20, after: $productsAfter) {
-      ...PaginatedProductList
-    }
-  }
-}
-    ${PaginatedProductListFragmentDoc}`;
-export const useGetCollectionByHandleQuery = <
-      TData = GetCollectionByHandleQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: GetCollectionByHandleQueryVariables,
-      options?: UseQueryOptions<GetCollectionByHandleQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetCollectionByHandleQuery, TError, TData>(
-      ['GetCollectionByHandle', variables],
-      fetcher<GetCollectionByHandleQuery, GetCollectionByHandleQueryVariables>(client, GetCollectionByHandleDocument, variables, headers),
-      options
-    );
-
-useGetCollectionByHandleQuery.getKey = (variables: GetCollectionByHandleQueryVariables) => ['GetCollectionByHandle', variables];
-;
-
-export const useInfiniteGetCollectionByHandleQuery = <
-      TData = GetCollectionByHandleQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof GetCollectionByHandleQueryVariables,
-      client: GraphQLClient,
-      variables: GetCollectionByHandleQueryVariables,
-      options?: UseInfiniteQueryOptions<GetCollectionByHandleQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<GetCollectionByHandleQuery, TError, TData>(
-      ['GetCollectionByHandle.infinite', variables],
-      (metaData) => fetcher<GetCollectionByHandleQuery, GetCollectionByHandleQueryVariables>(client, GetCollectionByHandleDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
-      options
-    );
-
-
-useInfiniteGetCollectionByHandleQuery.getKey = (variables: GetCollectionByHandleQueryVariables) => ['GetCollectionByHandle.infinite', variables];
-;
-
-useGetCollectionByHandleQuery.fetcher = (client: GraphQLClient, variables: GetCollectionByHandleQueryVariables, headers?: RequestInit['headers']) => fetcher<GetCollectionByHandleQuery, GetCollectionByHandleQueryVariables>(client, GetCollectionByHandleDocument, variables, headers);
 export const GetShopInfoDocument = `
     query GetShopInfo {
   shop {

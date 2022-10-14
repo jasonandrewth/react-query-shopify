@@ -13,7 +13,6 @@ import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClien
 import {
   Product,
   GetAllProductsQuery,
-  GetCollectionByHandleQuery,
   useGetAllProductsQuery,
   useInfiniteGetAllProductsQuery,
 } from "src/generated/graphql";
@@ -26,12 +25,7 @@ interface IProps {
   productData: InfiniteData<GetAllProductsQuery>;
   fetchNextPage?: (
     options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      GetCollectionByHandleQuery | GetAllProductsQuery,
-      Error
-    >
-  >;
+  ) => Promise<InfiniteQueryObserverResult<GetAllProductsQuery, Error>>;
 }
 
 const ProductGrid: React.FC<IProps> = ({ productData }) => {
