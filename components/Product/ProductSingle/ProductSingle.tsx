@@ -80,6 +80,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
         queryClient.invalidateQueries(
           useGetCartItemCountQuery.getKey({ checkoutId: checkoutId })
         );
+        console.log("product mutation data", data);
         // setResponse(data);
       },
       onError: () => {
@@ -170,7 +171,7 @@ const ProductSingle: React.FC<IProps> = ({ product, context }) => {
           </Button>
         )}
 
-        {isError && (
+        {isError && cartError && (
           <span className="text-pink pt-3">Error adding item to cart</span>
         )}
 

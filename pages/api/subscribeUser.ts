@@ -1,5 +1,4 @@
 import { gql, GraphQLClient } from "graphql-request";
-import { shopifyAdminGraphqlRequestClient } from "../../src/lib/clients/graphqlRequestClient";
 
 const submitter = async (req, res) => {
   const { email } = req.body;
@@ -31,17 +30,6 @@ const submitter = async (req, res) => {
               marketingState
               consentUpdatedAt
             }
-          }
-        }
-      }
-    `;
-
-    const query = gql`
-      query getCustomer {
-        customer(id: "gid://shopify/Customer/6023078445252") {
-          email
-          emailMarketingConsent {
-            marketingState
           }
         }
       }
