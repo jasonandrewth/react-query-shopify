@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/future/image";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 
@@ -10,25 +10,26 @@ import { patreonRequestClient } from "src/lib/clients/axiosClient";
 import { getLayout } from "components/Layout/Layout";
 
 const SubscribePage = ({ data }) => {
-  const {
-    isLoading,
-    isError,
-    data: postData,
-    error,
-  } = useQuery(
-    ["patreon"],
-    async () =>
-      await patreonRequestClient.get(
-        `https://www.patreon.com/api/oauth2/v2/campaigns/6702424?include=tiers&fields${encodeURIComponent(
-          "[tier]"
-        )}=title,description,image_url,url,amount_cents`
-      ),
-    { initialData: data }
-  );
+  // const {
+  //   isLoading,
+  //   isError,
+  //   data: postData,
+  //   error,
+  // } = useQuery(
+  //   ["patreon"],
+  //   async () =>
+  //     await patreonRequestClient.get(
+  //       `https://www.patreon.com/api/oauth2/v2/campaigns/6702424?include=tiers&fields${encodeURIComponent(
+  //         "[tier]"
+  //       )}=title,description,image_url,url,amount_cents`
+  //     ),
+  //   { initialData: data }
+  // );
 
   return (
     <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0  max-w-8xl">
-      {data.tierData.map((tier, idx) => {
+      {data.tierData.map((tier, idx: number) => {
+        console.log(tier);
         return (
           <Link
             key={idx}
@@ -38,21 +39,25 @@ const SubscribePage = ({ data }) => {
             <a target="_blank">
               <article
                 key={idx}
-                className="shadow-xl rounded-md border border-black overflow-hidden"
+                className="relative shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-md border border-black overflow-hidden transition-all duration-200 ease-in-out"
               >
                 <Image
                   src={tier.attributes.image_url}
                   alt={tier.attributes.title}
                   width={500}
                   height={500}
-                  blurDataURL={tier.attributes.image_url} //automatically provided
+                  sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+                  style={{ objectFit: "cover", width: "100%" }}
+                  blurDataURL={tier.attributes.image_url}
                   placeholder="blur" // Optional blur-up while loading
-                  className="w-full p-0 m-0"
+                  className="rounded-t-md"
                 />
                 <div className="px-4 max-w-[500px]">
                   <h2 className="whitespace-normal m-0 py-2 pr-2 font-bold">
-                    {tier.attributes.title}: {tier.attributes.amount_cents / 10}
-                    $ per month
+                    {tier.attributes.title}:{" "}
+                    {tier.attributes.amount_cents / 100}$ per month
                   </h2>
                   {tier?.attributes?.description && (
                     <div
@@ -89,7 +94,7 @@ export const getStaticProps = async () => {
         tierData: tierData.included,
       },
     },
-    revalidate: 10, // In seconds
+    revalidate: 1, // In seconds
   };
 };
 

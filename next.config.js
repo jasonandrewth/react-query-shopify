@@ -5,6 +5,7 @@ const nextConfig = {
   images: {
     domains: [process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN, "cdn.shopify.com", "c10.patreonusercontent.com"],
   },
+  experimental: { images: { allowFutureImage: true } },
   async redirects() {
     return [
       {
