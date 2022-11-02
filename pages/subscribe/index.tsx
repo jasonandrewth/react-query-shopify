@@ -27,53 +27,56 @@ const SubscribePage = ({ data }) => {
   // );
 
   return (
-    <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0  max-w-8xl">
-      {data.tierData.map((tier, idx: number) => {
-        console.log(tier);
-        return (
-          <Link
-            key={idx}
-            passHref
-            href={`https://patreon.com${tier.attributes.url}`}
-          >
-            <a target="_blank">
-              <article
-                key={idx}
-                className="relative shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-md border border-black overflow-hidden transition-all duration-200 ease-in-out"
-              >
-                <Image
-                  src={tier.attributes.image_url}
-                  alt={tier.attributes.title}
-                  width={500}
-                  height={500}
-                  sizes="(max-width: 768px) 100vw,
+    <>
+      <NextSeo title="Subscribe" description="Patreon Subscribtions" />
+      <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-0  max-w-8xl">
+        {data.tierData.map((tier, idx: number) => {
+          console.log(tier);
+          return (
+            <Link
+              key={idx}
+              passHref
+              href={`https://patreon.com${tier.attributes.url}`}
+            >
+              <a target="_blank">
+                <article
+                  key={idx}
+                  className="relative shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-md border border-black overflow-hidden transition-all duration-200 ease-in-out"
+                >
+                  <Image
+                    src={tier.attributes.image_url}
+                    alt={tier.attributes.title}
+                    width={500}
+                    height={500}
+                    sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"
-                  style={{ objectFit: "cover", width: "100%" }}
-                  blurDataURL={tier.attributes.image_url}
-                  placeholder="blur" // Optional blur-up while loading
-                  className="rounded-t-md"
-                />
-                <div className="px-4 max-w-[500px]">
-                  <h2 className="whitespace-normal m-0 py-2 pr-2 font-bold">
-                    {tier.attributes.title}:{" "}
-                    {tier.attributes.amount_cents / 100}$ per month
-                  </h2>
-                  {tier?.attributes?.description && (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: tier.attributes.description as string,
-                      }}
-                      className="pb-2 md:pb-4"
-                    ></div>
-                  )}
-                </div>
-              </article>
-            </a>
-          </Link>
-        );
-      })}
-    </div>
+                    style={{ objectFit: "cover", width: "100%" }}
+                    blurDataURL={tier.attributes.image_url}
+                    placeholder="blur" // Optional blur-up while loading
+                    className="rounded-t-md"
+                  />
+                  <div className="px-4 max-w-[500px]">
+                    <h2 className="whitespace-normal m-0 py-2 pr-2 font-bold">
+                      {tier.attributes.title}:{" "}
+                      {tier.attributes.amount_cents / 100}$ per month
+                    </h2>
+                    {tier?.attributes?.description && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: tier.attributes.description as string,
+                        }}
+                        className="pb-2 md:pb-4"
+                      ></div>
+                    )}
+                  </div>
+                </article>
+              </a>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
