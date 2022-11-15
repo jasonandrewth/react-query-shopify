@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 //Layout
 import { getLayout } from "components/Layout/Layout";
 
+//Redirect
 const Error = () => {
   const router = useRouter();
 

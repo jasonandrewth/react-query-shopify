@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Hydrate,
   QueryClient,
@@ -17,26 +16,6 @@ import NextApp, { AppProps } from "next/app";
 import "swiper/scss";
 import "assets/main.css";
 import "assets/chrome-bug.css";
-
-const variants = {
-  in: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      duration: 0.1,
-      delay: 0.01,
-    },
-  },
-  out: {
-    opacity: 0,
-    scale: 1,
-    y: 10,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};
 
 // this should give a better typing
 type Props = AppProps & {
@@ -92,19 +71,7 @@ function App({
           // hello
         />
         <ManagedUIContext>
-          {getLayout(
-            <AnimatePresence initial={false} mode="wait">
-              <motion.div
-                key={asPath}
-                variants={variants}
-                animate="in"
-                initial="out"
-                exit="out"
-              >
-                <Component {...pageProps} key={router.route} />
-              </motion.div>
-            </AnimatePresence>
-          )}
+          {getLayout(<Component {...pageProps} key={router.route} />)}
         </ManagedUIContext>
       </Hydrate>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}

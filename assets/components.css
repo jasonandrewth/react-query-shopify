@@ -6,21 +6,3 @@
 .swiper-wrapper {
   align-items: center;
 }
-
-.swiper-pagination-bullet {
-  width: 400px !important;
-  height: 20px;
-  color: #000;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.swiper-pagination-bullet-active {
-  color: #fff;
-  background: #ff0000 !important;
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  color: #adff00 !important;
-}

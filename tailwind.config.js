@@ -23,8 +23,6 @@ module.exports = {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        'lime': '#ADFF00',
-        'pink': "#fe019a",
         primary: 'var(--primary)',
         'primary-2': 'var(--primary-2)',
         secondary: 'var(--secondary)',

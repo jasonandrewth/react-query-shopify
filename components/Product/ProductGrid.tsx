@@ -11,9 +11,8 @@ import {
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 
 import {
-  Product,
   GetAllProductsQuery,
-  useGetAllProductsQuery,
+  GetCollectionByHandleQuery,
   useInfiniteGetAllProductsQuery,
 } from "src/generated/graphql";
 
@@ -22,7 +21,9 @@ import Loader from "components/UI/Loader";
 import { formatPrice } from "lib/shopify/usePrice";
 
 interface IProps {
-  productData: InfiniteData<GetAllProductsQuery>;
+  productData:
+    | InfiniteData<GetAllProductsQuery>
+    | InfiniteData<GetCollectionByHandleQuery>;
   fetchNextPage?: (
     options?: FetchNextPageOptions
   ) => Promise<InfiniteQueryObserverResult<GetAllProductsQuery, Error>>;
@@ -46,7 +47,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
           }
         },
         onSuccess: () => {
-          // console.log(Date.now(), "Fetching products succeed");
+          console.log(Date.now(), "Fetching products succeed");
         },
       }
     );
@@ -66,12 +67,12 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
         <div className="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto px-2 lg:px-6 max-w-8xl">
           {productData?.pages?.map((page, idx) => (
             <React.Fragment key={`page-${page.__typename}-${idx}`}>
-              {page?.products?.nodes.map((product, idx) => {
+              {page?.products?.edges.map(({ node: product }, idx) => {
                 const productImage = product?.featuredImage || null;
                 return (
                   <article
                     key={`product-${product?.id}-${idx}`}
-                    className="shadow-xl lg:shadow-none lg:hover:shadow-xl rounded-md border border-black overflow-hidden transition-all duration-200 ease-in-out"
+                    className=" overflow-hidden transition-all duration-200 ease-in-out"
                   >
                     <Link href={`/products/${product.handle}`}>
                       <a>
@@ -79,15 +80,14 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                           <Image
                             src={productImage.url}
                             alt={productImage.altText}
-                            width={500}
-                            height={500}
+                            width={productImage.width}
+                            height={productImage.height}
                             blurDataURL={productImage.url} //automatically provided
                             placeholder="blur" // Optional blur-up while loading
-                            className="rounded-t-md"
                           />
                         )}
 
-                        <div className="grid grid-cols-4 max-w-[500px] bg-white text-black font-bold uppercase px-4 py-2">
+                        <div className="grid grid-cols-4 max-w-[500px] bg-white text-primary font-bold uppercase px-4 py-2">
                           <div className="col-span-3">
                             {product.title && (
                               <h2 className="whitespace-normal m-0 p-0 pr-2">
@@ -96,7 +96,7 @@ const ProductGrid: React.FC<IProps> = ({ productData }) => {
                             )}
                           </div>
 
-                          <div className="col-span-1 border-none border-black flex items-center justify-end">
+                          <div className="col-span-1 border-none border-secondary flex items-center justify-end">
                             {product.priceRange.maxVariantPrice && (
                               <h2 className="whitespace-normal m-0 p-0">
                                 {formatPrice({

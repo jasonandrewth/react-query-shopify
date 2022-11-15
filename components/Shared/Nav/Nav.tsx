@@ -1,44 +1,33 @@
-import { memo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import nookies from "nookies";
 
+import nookies from "nookies";
 import clsx from "clsx";
 import useMedia from "use-media";
 
-import { useUI } from "components/UI/context";
-
-//Data Fetching
+import { Collection, CollectionEdge } from "src/generated/graphql";
+import { SHOPIFY_CHECKOUT_ID_COOKIE } from "lib/const";
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
+
+import Bag from "components/Icons/Bag";
 
 import {
   useGetCartItemCountQuery,
   GetCartItemCountQuery,
 } from "src/generated/graphql";
 
-//Components
-import NavButton from "./components/NavButton";
-import Newsletter from "./components/Newsletter/Newsletter";
-
-import Logo from "components/Icons/Logo";
-import Bag from "components/Icons/Bag";
-
 interface IProps {
-  shopName?: string;
+  navData?: CollectionEdge[];
 }
 
-const links = [
-  { href: "/products", text: "products" },
-  { href: "/subscribe", text: "subscribe" },
-  { href: "/shows", text: "shows" },
-  { href: "/about", text: "about" },
-];
-
-const Navigation: React.FC<IProps> = () => {
+const Navigation: React.FC<IProps> = ({ navData }) => {
   const isDesktop = useMedia({ minWidth: "1024px" });
+  const [quantity, setQuantity] = useState(0);
 
-  const CHECKOUT_ID = "CHECKOUT_ID";
-  const checkoutId = nookies.get(null, CHECKOUT_ID).CHECKOUT_ID;
+  const checkoutId = nookies.get(
+    null,
+    SHOPIFY_CHECKOUT_ID_COOKIE
+  ).shopify_checkoutId;
 
   const { data, isLoading, error, isSuccess } = useGetCartItemCountQuery<
     GetCartItemCountQuery,
@@ -47,131 +36,45 @@ const Navigation: React.FC<IProps> = () => {
     checkoutId: checkoutId,
   });
 
-  if (data?.node?.__typename === "Checkout") {
-    console.log("data", data?.node?.lineItems?.edges?.length);
-  }
-
-  //Router
-  const router = useRouter();
-
-  //UI State
-  const { openMenu, closeMenu, displayMenu, toggleMenu } = useUI();
+  useEffect(() => {
+    if (data?.node?.__typename === "Checkout") {
+      let count = 0;
+      data.node.lineItems.edges.forEach(
+        (item) => (count += item.node.quantity)
+      );
+      setQuantity(count);
+    }
+  }, [data]);
 
   return (
-    <nav className="fixed z-50 top-0 left-0 w-screen">
-      <div className="bg-white z-20 py-4 px-4 md:px-6 xl:px-8 border-b border-black relative flex justify-between items-center">
-        {isDesktop ? (
-          <div>
-            <ul className="flex last:m-0">
-              {links.map((link, idx) => {
-                return (
-                  <li className="mr-4 last:m-0" key={idx}>
-                    <Link href={link.href}>
-                      <a>
-                        <NavButton
-                          text={link.text}
-                          isActive={router.pathname.startsWith(link.href)}
-                        />
-                      </a>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : (
-          <div
-            onClick={toggleMenu}
-            className="cursor-pointer lg:hidden space-y-0.5"
-          >
-            <span
-              className={clsx(
-                displayMenu ? "" : "-translate-y-1.5",
-                "block w-8 h-0.5 bg-black transform transition duration-300 ease-in-out"
-              )}
-            ></span>
-            <span
-              className={clsx(
-                displayMenu && "opacity-0",
-                "block w-8 h-0.5 bg-black transform transition duration-300 ease-in-out"
-              )}
-            ></span>
-            <span
-              className={clsx(
-                displayMenu ? "" : "translate-y-1.5",
-                "block w-8 h-0.5 bg-black transform transition duration-300 ease-in-out"
-              )}
-            ></span>
-          </div>
-        )}
+    <nav className="sticky w-screen z-50 top-0 left-0 px-4 md:px-8 py-4 flex items-center justify-between border-b border-secondary bg-white list-none ">
+      <div className="text-sm md:text-base font-black uppercase hover:text-accent-6">
+        <ul className="flex">
+          <li className="mr-4">
+            <Link href="/">
+              <a>Home</a>
+            </Link>
+          </li>
 
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-          <Link href={`/`} className="font-bold uppercase text-xl">
-            <a>
-              <Logo
-                width={isDesktop ? 186 : 155}
-                height={isDesktop ? 26 : 22}
-              />
-            </a>
-          </Link>
-        </div>
+          <li className="mr-4">
+            <Link href="/collections">
+              <a>Collections</a>
+            </Link>
+          </li>
 
-        <div className="relative font-bold uppercase text-xl cursor-pointer">
-          <Link href={`/cart`}>
-            <a>
-              <Bag width={22} height={22} />
-              {data?.node?.__typename === "Checkout" &&
-                data?.node?.lineItems?.edges?.length > 0 && (
-                  <div className="rounded-full bg-pink w-3 h-3 absolute -top-1/2 -right-1/2 translate-y-1/2 -translate-x-1/2" />
-                )}
-            </a>
-          </Link>
-        </div>
+          <li>
+            <Link href="/about/">
+              <a>About</a>
+            </Link>
+          </li>
+        </ul>
       </div>
-
-      <Newsletter />
-
-      <div
-        className={clsx(
-          displayMenu
-            ? "translate-y-full opacity-100"
-            : "-translate-y-full opacity-100",
-          "flex drop-shadow-sm overflow-x-scroll justify-between bg-white py-4 px-4 md:px-6 xl:px-8 lg:hidden border-b border-black transition-all duration-300 ease-in-out"
-        )}
-      >
-        <Link href={`/products`}>
+      <div className="text-sm md:text-base relative font-bold uppercase cursor-pointer hover:text-accent-6">
+        <Link href={`/cart`}>
           <a>
-            <NavButton
-              text="Products"
-              isActive={router.pathname.startsWith("/products")}
-            />
-          </a>
-        </Link>
-
-        <Link href={`/subscribe`}>
-          <a>
-            <NavButton
-              text="Subscribe"
-              isActive={router.pathname.startsWith("/subscribe")}
-            />
-          </a>
-        </Link>
-
-        <Link href={`/shows`}>
-          <a>
-            <NavButton
-              text="shows"
-              isActive={router.pathname.startsWith("/shows")}
-            />
-          </a>
-        </Link>
-
-        <Link href={`/about`}>
-          <a>
-            <NavButton
-              text="about"
-              isActive={router.pathname.startsWith("/about")}
-            />
+            Cart: {" " + quantity}
+            {/* {data?.node?.__typename === "Checkout" &&
+              data.node.lineItems.edges.length} */}
           </a>
         </Link>
       </div>
@@ -179,4 +82,4 @@ const Navigation: React.FC<IProps> = () => {
   );
 };
 
-export default memo(Navigation);
+export default React.memo(Navigation);

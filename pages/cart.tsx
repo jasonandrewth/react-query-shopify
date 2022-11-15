@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { NextSeo } from "next-seo";
 
-import type {
-  GetStaticPathsContext,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-  NextPageContext,
-} from "next";
+import type { NextPageContext } from "next";
+
+import { SHOPIFY_CHECKOUT_ID_COOKIE } from "lib/const";
 
 import nookies, { destroyCookie } from "nookies";
 
@@ -33,7 +30,10 @@ import {
 const CartPage = (context?: NextPageContext) => {
   const CHECKOUT_ID = "CHECKOUT_ID";
 
-  const checkoutId = nookies.get(context, CHECKOUT_ID).CHECKOUT_ID;
+  const checkoutId = nookies.get(
+    context,
+    SHOPIFY_CHECKOUT_ID_COOKIE
+  ).shopify_checkoutId;
 
   const { data, isLoading, error, isSuccess } = useGetCartQuery<
     GetCartQuery,
@@ -45,7 +45,7 @@ const CartPage = (context?: NextPageContext) => {
   const emptyMessage = (
     <>
       <NextSeo title="Cart" />
-      <h1 className="text-center uppercase font-bold text-2xl">cart empty</h1>
+      <h1 className="uppercase font-bold text-2xl">cart empty</h1>
     </>
   );
 
@@ -53,11 +53,12 @@ const CartPage = (context?: NextPageContext) => {
     if (data?.node?.__typename === "Checkout") {
       if (data?.node?.completedAt) {
         console.log("destroy");
-        destroyCookie(context, CHECKOUT_ID);
+        destroyCookie(context, SHOPIFY_CHECKOUT_ID_COOKIE);
       }
     }
+    //Need to ts ignore here bc i don't want to do an if check in deps array
     //@ts-ignore
-  }, [data?.node?.completedAt, context]);
+  }, [data?.node?.completedAt]);
 
   if (!checkoutId) {
     return emptyMessage;
@@ -93,12 +94,8 @@ const CartPage = (context?: NextPageContext) => {
           return (
             <>
               <NextSeo title="Cart" />
-              <div className="px-4 sm:px-6 text-xl flex-1 uppercase font-bold">
-                <h1 className="text-center uppercase font-bold text-2xl">
-                  My Cart
-                </h1>
-                {/* <Text variant="pageHeading">My Cart</Text>
-          <Text variant="sectionHeading">Review your Order</Text> */}
+              <div className="px-4 sm:px-6 text-xl flex-1 font-bold">
+                <h1 className="uppercase font-bold text-2xl">Cart</h1>
                 <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accent-2 border-b border-accent-2">
                   {
                     // @ts-ignore
@@ -117,7 +114,7 @@ const CartPage = (context?: NextPageContext) => {
                     <Button
                       href="/"
                       Component="a"
-                      className="rounded-md py-3 w-full md:w-auto"
+                      className=" py-3 w-full md:w-auto"
                     >
                       Continue Shopping
                     </Button>
@@ -129,7 +126,7 @@ const CartPage = (context?: NextPageContext) => {
                       }
                       Component="a"
                       openSeperate
-                      className="rounded-md py-3 md:px-2 md:mt-4 w-full md:w-auto"
+                      className="py-3 md:px-2 md:mt-4 w-full md:w-auto"
                     >
                       Proceed to Checkout
                     </Button>

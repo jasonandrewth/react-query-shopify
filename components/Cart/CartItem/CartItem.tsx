@@ -3,8 +3,6 @@ import { useDebounce } from "react-use";
 import Link from "next/link";
 import Image from "next/image";
 
-import nookies from "nookies";
-
 import { formatPrice } from "lib/shopify/usePrice";
 
 import {
@@ -136,7 +134,7 @@ export const CartItem: React.FC<IProps> = ({ item, checkoutId }) => {
               <Image
                 className={s.productImage}
                 width={150}
-                height={150}
+                height={200}
                 src={item.variant.image.url}
                 alt={item.variant.image!.altText}
                 unoptimized
@@ -150,9 +148,14 @@ export const CartItem: React.FC<IProps> = ({ item, checkoutId }) => {
               <span className={s.productName}>{item.title}</span>
             </a>
           </Link>
-          <span className="text-sm font-normal tracking-wider">
-            x{item.quantity}
-          </span>
+          <div className="flex gap-2">
+            <span className="text-sm font-normal tracking-wider">
+              {item.variant.title}
+            </span>
+            <span className="text-sm font-normal tracking-wider">
+              Quantitiy: {item.quantity}
+            </span>
+          </div>
           {item.variant.selectedOptions &&
             item.variant.selectedOptions.length > 0 && (
               <div className="flex items-center pb-1">

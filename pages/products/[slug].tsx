@@ -18,7 +18,6 @@ import { NextSeo } from "next-seo";
 
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 
-import { useAddItem } from "lib/shopify/CartHooks";
 import { getLayout } from "components/Layout/Layout";
 import Adder from "components/UI/Adder";
 

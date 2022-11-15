@@ -8,7 +8,7 @@
 
 .quantity {
   appearance: textfield;
-  @apply w-8 border-accent-2 border mx-3 rounded text-center text-sm text-black;
+  @apply w-8 border-accent-2 border mx-3 rounded text-center text-sm text-primary;
 }
 
 .quantity::-webkit-outer-spin-button,

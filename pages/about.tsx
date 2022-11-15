@@ -12,16 +12,36 @@ const About = () => {
       <NextSeo title="About" />
 
       <section className="px-4 max-w-8xl mx-auto">
-        <h1 className="uppercase font-bold text-2xl lg:text-3xl">About</h1>
+        <h1 className="uppercase font-bold text-2xl lg:text-3xl">
+          Static About
+        </h1>
         <p className="mt-3 lg:mt-4 lg:text-xl max-w-[850px] 2xl:max-w-[1312px]">
-          Ved tidenes morgen delte en fjord seg og sprutet ut vulkansk stein,
-          som en salamander med vinger steg opp fra. Han tilintetgjorde tusenvis
-          av hærer og slukte sjelene til millioner. Det ble ført en krig for å
-          stoppe ham, men intet menneske og ingen algoritme kunne beseire ham.
-          Til den dag i dag hersker han over alt fra sitt bevoktede domene,
-          plassert på et taggete fjell av blod og tårer. Navnet hans er Ben
-          Ditto.
+          Du siehst mich nie zweimal in den selben Klamotten / Und nach ein Mal
+          driven lass ich meinen Maybach verschrotten / Socken und Unterhosen
+          werden nicht gewaschen / Ein Mal rocken und am nächsten Tag frische
+          Sachen / Ich bin frisch, wie die Fische die wo Fischers Fritze fischen
+          tut / Louis Belt, Armani Shirt und ein Gucci Fischerhut / Flyer als
+          ein Zeppelin, oder als ein Pelikan / Ich bin jetzt am ballen wie ne
+          Kugel auf ner Kegelbahn
         </p>
+
+        <a
+          href="https://www.jason-andrew.com/"
+          rel="noreferrer"
+          target={"_blank"}
+          className="block pt-4 italic hover:text-accent-6"
+        >
+          <span className="block pt-4">Jason Andrew © 2022</span>
+        </a>
+
+        <a
+          href="https://github.com/jasonandrewth/react-query-shopify"
+          rel="noreferrer"
+          target={"_blank"}
+          className="block pt-4 italic hover:text-accent-6"
+        >
+          Find The Source on Github
+        </a>
       </section>
     </>
   );

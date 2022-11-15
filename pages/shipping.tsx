@@ -1,11 +1,14 @@
 import React from "react";
+import { NextSeo } from "next-seo";
 
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
 
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import Layout from "components/Layout";
 import Loader from "components/UI/Loader";
+
+//Layout
+import { getLayout } from "components/Layout/Layout";
 
 import { useGetShopInfoQuery, GetShopInfoQuery } from "src/generated/graphql";
 
@@ -19,16 +22,19 @@ const ShippingPage = () => {
   if (error) return null;
 
   return (
-    <Layout
-      main={
-        <div
-          className="max-w-8xl"
-          dangerouslySetInnerHTML={{ __html: data?.shop?.shippingPolicy?.body }}
-        />
-      }
-    />
+    <>
+      <NextSeo title="Shipping" />
+      <div
+        className="max-w-8xl"
+        dangerouslySetInnerHTML={{
+          __html: data?.shop?.shippingPolicy?.body ?? "No Shipping fetched",
+        }}
+      />
+    </>
   );
 };
+
+ShippingPage.getLayout = getLayout;
 
 export default ShippingPage;
 
@@ -44,6 +50,6 @@ export const getStaticProps = async () => {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
-    revalidate: 180, // In seconds
+    revalidate: 10, // In seconds
   };
 };

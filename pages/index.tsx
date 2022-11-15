@@ -1,29 +1,75 @@
-import { NextSeo } from "next-seo";
-
-import Image from "next/image";
+import Head from "next/head";
+import Link from "next/link";
 import { shopifyGraphqlRequestClient } from "src/lib/clients/graphqlRequestClient";
+import { NextSeo } from "next-seo";
 
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import { getLayout } from "components/Layout/Layout";
+import ProductGrid from "components/Product/ProductGrid";
+import Loader from "components/UI/Loader";
 
-import { useGetShopInfoQuery } from "src/generated/graphql";
+import {
+  Product,
+  GetAllProductsQuery,
+  useGetAllProductsQuery,
+  useInfiniteGetAllProductsQuery,
+  useGetShopInfoQuery,
+} from "src/generated/graphql";
 
-export default function Home() {
+export default function ProductsPage() {
+  const { isLoading, error, data, isSuccess, fetchNextPage, hasNextPage } =
+    useInfiniteGetAllProductsQuery<GetAllProductsQuery, Error>(
+      "after",
+      shopifyGraphqlRequestClient,
+      {
+        after: null,
+      },
+      {
+        // initialData: ,
+        getNextPageParam: (lastPage, allPages) => {
+          if (lastPage.products.pageInfo.hasNextPage) {
+            return {
+              after: lastPage.products.pageInfo.endCursor,
+            };
+          }
+        },
+        onSuccess: () => {
+          console.log(Date.now(), "Fetching products succeed");
+        },
+      }
+    );
+
+  if (isLoading) return <Loader />;
+
+  if (error) return <h1>{JSON.stringify(error)}</h1>;
+
   return (
     <>
-      <NextSeo title="Home" />
-      <div className="fixed overflow-hidden top-0 left-0 h-screen !w-screen">
-        <Image src={"/giphy.gif"} alt="homepage" layout="fill"></Image>
-      </div>
+      <NextSeo
+        title={"Home"}
+        description={"Home"}
+        openGraph={{
+          type: "website",
+          title: "Home",
+          description: "Home",
+        }}
+      />
+
+      <ProductGrid productData={data} />
     </>
   );
 }
 
-Home.getLayout = getLayout;
+ProductsPage.getLayout = getLayout;
 
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
+
+  await queryClient.prefetchInfiniteQuery(
+    useInfiniteGetAllProductsQuery.getKey({ after: null }),
+    useGetAllProductsQuery.fetcher(shopifyGraphqlRequestClient, { after: null })
+  );
 
   await queryClient.prefetchQuery(
     useGetShopInfoQuery.getKey(),

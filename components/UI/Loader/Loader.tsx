@@ -6,7 +6,7 @@ const Loader = () => {
       <div className="inline-flex items-center justify-start gap-1">
         <svg
           role="status"
-          className="mr-2 h-8 w-8 animate-spin fill-lime text-gray-100 dark:text-gray-600"
+          className="mr-2 h-8 w-8 animate-spin fill-red text-gray-100 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

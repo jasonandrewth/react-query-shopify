@@ -1,7 +1,7 @@
 .root {
   @apply cursor-pointer inline-flex transition ease-in-out duration-150
   text-center justify-center uppercase
-  border border-black items-center text-sm;
+  border border-secondary items-center text-sm;
   max-height: 64px;
 }
 
