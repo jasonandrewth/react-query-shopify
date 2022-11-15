@@ -1,20 +1,20 @@
 {
-  "title": "Ditto Nation",
-  "titleTemplate": "%s - Ditto Nation",
-  "description": "Ditto Nation - https://www.ditto-nation.com",
+  "title": "React Query Shopify",
+  "titleTemplate": "%s - React Query Shopify",
+  "description": "React Query Shopify",
   "openGraph": {
-    "title": "Ditto Nation",
-    "description": "Ditto Nation",
+    "title": "React Query Shopify",
+    "description": "React Query Shopify",
     "type": "website",
     "locale": "en_IE",
-    "url": "https://ditto-nation.com",
-    "site_name": "Ditto Nation",
+    "url": "https://example.com",
+    "site_name": "React Query Shopify",
     "images": [
       {
         "url": "/card.png",
         "width": 800,
         "height": 600,
-        "alt": "Ditto Nation"
+        "alt": "React Query Shopify"
       }
     ]
   }
