@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --legacy-peer-deps",
     "start": "next start",
     "lint": "next lint",
     "graphql:codegen": "graphql-codegen --config codegen.yml"
