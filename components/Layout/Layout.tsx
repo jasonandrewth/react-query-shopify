@@ -1,8 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
-
-import { gql } from "graphql-request";
-
-import { useUI } from "components/UI/context";
+import React, { ReactElement } from "react";
 
 //components
 import Nav from "components/Shared/Nav";

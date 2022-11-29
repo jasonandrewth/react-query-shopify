@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "graphql:codegen": "graphql-codegen --config codegen.yml"
+    "graphql:codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@graphql-codegen/cli": "^2.14.1",
+    "@graphql-codegen/client-preset": "^1.2.0",
     "@material-ui/core": "^4.12.4",
     "@tanstack/react-query": "^4.0.10",
     "@tanstack/react-query-devtools": "^4.0.10",

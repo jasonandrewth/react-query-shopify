@@ -10,7 +10,6 @@ import { DefaultSeo } from "next-seo";
 import config from "config/seo.json";
 
 import type { Page } from "src/types/page";
-import { ManagedUIContext } from "components/UI/context";
 import NextApp, { AppProps } from "next/app";
 
 import "swiper/scss";
@@ -42,9 +41,7 @@ function App({ Component, router, pageProps }: Props) {
           {...config}
           // hello
         />
-        <ManagedUIContext>
-          {getLayout(<Component {...pageProps} key={router.route} />)}
-        </ManagedUIContext>
+        {getLayout(<Component {...pageProps} key={router.route} />)}
       </Hydrate>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
