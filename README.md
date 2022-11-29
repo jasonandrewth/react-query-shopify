@@ -26,7 +26,6 @@ yarn graphql:codegen
 
 This will generate types with react-query and GraphQL Codegen as specified in the `codegen.yml`
 Check out this [blog post](https://nhost.io/blog/how-to-use-graphql-code-generator-with-react-query) for an intro to this stack. Curently when types are generated they are stored in src/generated/graphql.ts but with the old version of reaxt-query. To make it work simply update the import to `from "@tanstack/react-query"`
-The Schema comes directly from the API Endpoint your querying so right now, in the `codegen.yml`, this secret is exposed but ideally you should store in an .env file.
 
 ```
 //.env file in project root
